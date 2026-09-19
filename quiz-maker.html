@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MusicTutorPh - Quiz Maker</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+        body { font-family: 'Inter', sans-serif; }
+    </style>
+</head>
+<body class="bg-slate-900 text-slate-100 flex h-screen overflow-hidden">
+
+    <!-- MAIN SIDEBAR MENU -->
+    <aside class="w-64 bg-slate-950 border-r border-slate-800 flex flex-col justify-between hidden md:flex shrink-0 overflow-y-auto">
+        <div>
+            <!-- Logo Header -->
+            <div class="p-6 border-b border-slate-800 flex items-center space-x-3 sticky top-0 bg-slate-950 z-10">
+                <div class="bg-indigo-600 text-white p-2 rounded-lg text-xl flex items-center justify-center">
+                    <i class="fa-solid fa-music"></i>
+                </div>
+                <div>
+                    <h1 class="font-bold text-lg tracking-wide text-white">MusicTutor<span class="text-indigo-400">PH</span></h1>
+                    <span class="text-xs text-slate-400">Teacher's Portal</span>
+                </div>
+            </div>
+
+            <!-- Navigation Links -->
+            <nav class="p-4 space-y-1">
+                <!-- 1. Dashboard -->
+                <a href="dashboard.html" class="w-full flex items-center space-x-3 px-4 py-2.5 text-slate-400 hover:bg-slate-800 hover:text-slate-200 rounded-lg font-medium transition text-left text-sm">
+                    <i class="fa-solid fa-chart-pie w-5 text-center"></i>
+                    <span>Dashboard</span>
+                </a>
+
+                <!-- 2. Group Lessons (Dropdown parent) -->
+                <div>
+                    <button onclick="toggleSubmenu('groupLessonsMenu', 'groupLessonsChevron')" class="w-full flex items-center justify-between px-4 py-2.5 text-slate-400 hover:bg-slate-800 hover:text-slate-200 rounded-lg font-medium transition text-sm">
+                        <div class="flex items-center space-x-3">
+                            <i class="fa-solid fa-people-group w-5 text-center"></i>
+                            <span>Group Lessons</span>
+                        </div>
+                        <i id="groupLessonsChevron" class="fa-solid fa-chevron-down text-xs transition-transform duration-200"></i>
+                    </button>
+                    <div id="groupLessonsMenu" class="pl-11 pr-2 py-1 space-y-1 hidden">
+                        <a href="group-students-data.html" class="block py-1.5 px-3 text-xs text-slate-400 hover:text-indigo-400 hover:bg-slate-900 rounded-md transition">Students Data</a>
+                        <a href="group-gradebook.html" class="block py-1.5 px-3 text-xs text-slate-400 hover:text-indigo-400 hover:bg-slate-900 rounded-md transition">Gradebook</a>
+                        <a href="group-assessment.html" class="block py-1.5 px-3 text-xs text-slate-400 hover:text-indigo-400 hover:bg-slate-900 rounded-md transition">Assessment</a>
+                    </div>
+                </div>
+
+                <!-- 3. One-on-One (Dropdown parent) -->
+                <div>
+                    <button onclick="toggleSubmenu('oneOnOneMenu', 'oneOnOneChevron')" class="w-full flex items-center justify-between px-4 py-2.5 text-slate-400 hover:bg-slate-800 hover:text-slate-200 rounded-lg font-medium transition text-sm">
+                        <div class="flex items-center space-x-3">
+                            <i class="fa-solid fa-user-graduate w-5 text-center"></i>
+                            <span>One-on-One</span>
+                        </div>
+                        <i id="oneOnOneChevron" class="fa-solid fa-chevron-down text-xs transition-transform duration-200"></i>
+                    </button>
+                    <div id="oneOnOneMenu" class="pl-11 pr-2 py-1 space-y-1 hidden">
+                        <a href="one-on-one-student-profile.html" class="block py-1.5 px-3 text-xs text-slate-400 hover:text-indigo-400 hover:bg-slate-900 rounded-md transition">Student Profile</a>
+                        <a href="one-on-one-gradebook.html" class="block py-1.5 px-3 text-xs text-slate-400 hover:text-indigo-400 hover:bg-slate-900 rounded-md transition">Gradebook</a>
+                        <a href="one-on-one-assessment.html" class="block py-1.5 px-3 text-xs text-slate-400 hover:text-indigo-400 hover:bg-slate-900 rounded-md transition">Assessment</a>
+                    </div>
+                </div>
+
+                <!-- 4. Lesson Library (Dropdown parent) -->
+                <div>
+                    <button onclick="toggleSubmenu('lessonLibraryMenu', 'lessonLibraryChevron')" class="w-full flex items-center justify-between px-4 py-2.5 text-slate-400 hover:bg-slate-800 hover:text-slate-200 rounded-lg font-medium transition text-sm">
+                        <div class="flex items-center space-x-3">
+                            <i class="fa-solid fa-book-open w-5 text-center"></i>
+                            <span>Lesson Library</span>
+                        </div>
+                        <i id="lessonLibraryChevron" class="fa-solid fa-chevron-down text-xs transition-transform duration-200"></i>
+                    </button>
+                    <div id="lessonLibraryMenu" class="pl-11 pr-2 py-1 space-y-1 hidden">
+                        <a href="add-subject.html" class="block py-1.5 px-3 text-xs text-slate-400 hover:text-indigo-400 hover:bg-slate-900 rounded-md transition">Add Subject</a>
+                    </div>
+                </div>
+
+                <!-- 5. Quiz Maker (Active State) -->
+                <a href="quiz-maker.html" class="w-full flex items-center space-x-3 px-4 py-2.5 text-indigo-400 bg-indigo-600/20 rounded-lg font-medium transition text-left text-sm">
+                    <i class="fa-solid fa-list-check w-5 text-center text-indigo-400"></i>
+                    <span>Quiz Maker</span>
+                </a>
+
+                <!-- [Line Separator] -->
+                <div class="my-2 border-t border-slate-800/80"></div>
+
+                <!-- 6. Enrollment Forms -->
+                <a href="enrollment-forms.html" class="flex items-center space-x-3 px-4 py-2.5 text-slate-400 hover:bg-slate-800 hover:text-slate-200 rounded-lg font-medium transition text-sm">
+                    <i class="fa-solid fa-wpforms w-5 text-center"></i>
+                    <span>Enrollment Forms</span>
+                </a>
+
+                <!-- 7. Landing Pages -->
+                <a href="landing-pages.html" class="flex items-center space-x-3 px-4 py-2.5 text-slate-400 hover:bg-slate-800 hover:text-slate-200 rounded-lg font-medium transition text-sm">
+                    <i class="fa-solid fa-globe w-5 text-center"></i>
+                    <span>Landing Pages</span>
+                </a>
+
+                <!-- 8. Pre-Recorded Lessons -->
+                <a href="prerecorded-lessons.html" class="flex items-center space-x-3 px-4 py-2.5 text-slate-400 hover:bg-slate-800 hover:text-slate-200 rounded-lg font-medium transition text-sm">
+                    <i class="fa-solid fa-circle-play w-5 text-center"></i>
+                    <span>Pre-Recorded Lessons</span>
+                </a>
+
+                <!-- [Line Separator] -->
+                <div class="my-2 border-t border-slate-800/80"></div>
+
+                <!-- 9. Help -->
+                <a href="help.html" class="flex items-center space-x-3 px-4 py-2.5 text-slate-400 hover:bg-slate-800 hover:text-slate-200 rounded-lg font-medium transition text-sm">
+                    <i class="fa-solid fa-circle-question w-5 text-center"></i>
+                    <span>Help</span>
+                </a>
+            </nav>
+        </div>
+
+        <!-- Sidebar Footer User Profile -->
+        <div class="p-4 border-t border-slate-800">
+            <div class="bg-slate-900 p-3 rounded-lg border border-slate-800 mb-4">
+                <div class="flex justify-between items-center text-xs mb-1">
+                    <span class="text-slate-400">Current Plan</span>
+                    <span class="bg-emerald-500/20 text-emerald-400 px-2 py-0.5 rounded text-[10px] font-bold uppercase">Pro SaaS</span>
+                </div>
+                <p class="text-sm font-semibold">Teacher Plan</p>
+            </div>
+            <div class="flex items-center space-x-3">
+                <div class="w-10 h-10 rounded-full bg-indigo-600 text-white font-bold flex items-center justify-center text-sm border border-indigo-400/30">
+                    TJ
+                </div>
+                <div class="overflow-hidden">
+                    <p class="text-sm font-medium text-white truncate">Tutor Jay</p>
+                    <p class="text-xs text-slate-400 truncate">jay@musictutorph.com</p>
+                </div>
+            </div>
+        </div>
+    </aside>
+
+    <!-- MAIN CONTENT CONTAINER -->
+    <div class="flex-1 flex flex-col h-screen overflow-hidden bg-slate-900">
+        
+        <!-- TOPBAR -->
+        <header class="h-16 bg-slate-950 border-b border-slate-800 flex items-center justify-between px-6 shrink-0">
+            <div class="flex items-center space-x-3">
+                <h2 class="text-xl font-bold text-white flex items-center space-x-2">
+                    <i class="fa-solid fa-pen-to-square text-indigo-400"></i>
+                    <span>Interactive Quiz Maker</span>
+                </h2>
+                <span class="bg-indigo-500/20 text-indigo-400 text-xs px-2.5 py-0.5 rounded-full border border-indigo-500/30 font-semibold">Pro Creator</span>
+            </div>
+            
+            <div class="flex items-center space-x-3">
+                <button onclick="saveQuizToSupabase()" class="bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-semibold px-4 py-2 rounded-lg transition flex items-center space-x-2 shadow-lg shadow-indigo-900/30">
+                    <i class="fa-solid fa-floppy-disk"></i>
+                    <span>Save & Publish Quiz</span>
+                </button>
+            </div>
+        </header>
+
+        <!-- TWO-PANE QUIZ MAKER CONTENT AREA -->
+        <main class="flex-1 grid grid-cols-1 lg:grid-cols-2 overflow-hidden">
+            
+            <!-- PANE 1: TEACHER QUIZ EDITOR (LEFT SIDE) -->
+            <section class="border-r border-slate-800 p-6 overflow-y-auto space-y-6 bg-slate-950/50">
+                <div class="flex justify-between items-center border-b border-slate-800 pb-4">
+                    <div>
+                        <h3 class="text-sm font-bold text-indigo-400 uppercase tracking-wider flex items-center">
+                            <i class="fa-solid fa-sliders mr-2"></i> 1. Quiz Settings & Questions Editor
+                        </h3>
+                        <p class="text-xs text-slate-400">Dito ilalagay at ire-redact ang mga katanungan para sa mga estudyante.</p>
+                    </div>
+                </div>
+
+                <!-- Quiz General Info -->
+                <div class="bg-slate-900 p-4 rounded-xl border border-slate-800 space-y-4">
+                    <div>
+                        <label class="block text-xs font-medium text-slate-300 mb-1">Quiz Title:</label>
+                        <input type="text" id="quizTitleInput" oninput="updatePreview()" value="Basic Music Theory & Chord Identification" class="w-full bg-slate-950 border border-slate-800 rounded-lg p-2.5 text-xs text-white focus:outline-none focus:border-indigo-500 font-semibold">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-medium text-slate-300 mb-1">Instructions / Description:</label>
+                        <textarea id="quizDescInput" oninput="updatePreview()" rows="2" class="w-full bg-slate-950 border border-slate-800 rounded-lg p-2.5 text-xs text-slate-300 focus:outline-none focus:border-indigo-500">Sagutan ang mga sumusunod na katanungan batay sa ating nakaraang aralin sa Keyboard Chords.</textarea>
+                    </div>
+                </div>
+
+                <!-- Questions Container -->
+                <div id="questionsContainer" class="space-y-6">
+                    <!-- Dynamic Questions rendered by JS -->
+                </div>
+
+                <!-- Add Question Button -->
+                <button onclick="addQuestion()" class="w-full bg-slate-900 hover:bg-slate-800 border border-dashed border-indigo-500/50 hover:border-indigo-400 text-indigo-300 py-3 rounded-xl text-xs font-semibold transition flex items-center justify-center space-x-2">
+                    <i class="fa-solid fa-circle-plus"></i>
+                    <span>+ Add New Question</span>
+                </button>
+            </section>
+
+            <!-- PANE 2: STUDENT LIVE PREVIEW (RIGHT SIDE) -->
+            <section class="p-6 overflow-y-auto bg-slate-900 space-y-6 flex flex-col">
+                <div class="flex justify-between items-center border-b border-slate-800 pb-4 shrink-0">
+                    <div>
+                        <h3 class="text-sm font-bold text-emerald-400 uppercase tracking-wider flex items-center">
+                            <i class="fa-solid fa-eye mr-2"></i> 2. Student View (Live Interactive Preview)
+                        </h3>
+                        <p class="text-xs text-slate-400">Ganyan eksakto ang makikita at sasagutan ng estudyante mo sa kaniyang screen.</p>
+                    </div>
+                    <span class="bg-emerald-500/10 text-emerald-400 text-[10px] px-2.5 py-1 rounded-md border border-emerald-500/20 font-bold uppercase">
+                        Realtime Preview
+                    </span>
+                </div>
+
+                <!-- Student View Box -->
+                <div class="bg-slate-950 border border-slate-800 rounded-2xl p-6 shadow-2xl space-y-6 flex-1 flex flex-col justify-between">
+                    <div class="space-y-6">
+                        <!-- Preview Header -->
+                        <div class="border-b border-slate-800/80 pb-4">
+                            <h2 id="previewTitle" class="text-xl font-extrabold text-white">Quiz Title</h2>
+                            <p id="previewDesc" class="text-xs text-slate-400 mt-1">Quiz instructions here...</p>
+                        </div>
+
+                        <!-- Preview Interactive Questions List -->
+                        <div id="previewQuestionsList" class="space-y-6">
+                            <!-- Rendered Live Preview Questions -->
+                        </div>
+                    </div>
+
+                    <!-- Submit Quiz Test Button -->
+                    <div class="pt-6 border-t border-slate-800">
+                        <button onclick="submitTestQuiz()" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold py-3 rounded-xl transition shadow-lg shadow-emerald-900/30 flex items-center justify-center space-x-2">
+                            <i class="fa-solid fa-paper-plane"></i>
+                            <span>Submit Quiz Answers (Test Mode)</span>
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <!-- JAVASCRIPT LOGIC -->
+    <script>
+        let quizData = [
+            {
+                id: 1,
+                question: "Ano ang notes na bumubuo sa C Major Triad chord?",
+                points: 5,
+                options: ["C - E - G", "C - D# - G", "C - F - A", "D - F# - A"],
+                correctIndex: 0
+            },
+            {
+                id: 2,
+                question: "Ilang semitones ang pagitan ng Root Note at Major Third?",
+                points: 5,
+                options: ["2 Semitones", "3 Semitones", "4 Semitones", "5 Semitones"],
+                correctIndex: 2
+            }
+        ];
+
+        function toggleSubmenu(menuId, chevronId) {
+            const menu = document.getElementById(menuId);
+            const chevron = document.getElementById(chevronId);
+            if(menu) menu.classList.toggle('hidden');
+            if(chevron) chevron.classList.toggle('rotate-180');
+        }
+
+        function renderEditor() {
+            const container = document.getElementById('questionsContainer');
+            container.innerHTML = '';
+
+            quizData.forEach((q, qIndex) => {
+                const qCard = document.createElement('div');
+                qCard.className = "bg-slate-900 p-5 rounded-xl border border-slate-800 space-y-4 relative shadow-md";
+                
+                let optionsHTML = '';
+                q.options.forEach((opt, optIndex) => {
+                    const isCorrect = q.correctIndex === optIndex;
+                    optionsHTML += `
+                        <div class="flex items-center space-x-2">
+                            <input type="radio" name="correct_${q.id}" ${isCorrect ? 'checked' : ''} onchange="setCorrectAnswer(${qIndex}, ${optIndex})" class="w-4 h-4 text-indigo-600 accent-indigo-500 cursor-pointer">
+                            <input type="text" value="${opt}" oninput="updateOptionText(${qIndex}, ${optIndex}, this.value)" placeholder="Option ${optIndex + 1}" class="flex-1 bg-slate-950 border border-slate-800 rounded-lg p-2 text-xs text-slate-200 focus:outline-none focus:border-indigo-500">
+                        </div>
+                    `;
+                });
+
+                qCard.innerHTML = `
+                    <div class="flex justify-between items-center border-b border-slate-800 pb-2">
+                        <span class="text-xs font-bold text-indigo-400">Question #${qIndex + 1}</span>
+                        <div class="flex items-center space-x-3">
+                            <div class="flex items-center space-x-1">
+                                <span class="text-[10px] text-slate-400">Pts:</span>
+                                <input type="number" value="${q.points}" onchange="updatePoints(${qIndex}, this.value)" class="w-12 bg-slate-950 border border-slate-800 rounded p-1 text-xs text-center text-white focus:outline-none focus:border-indigo-500">
+                            </div>
+                            <button onclick="deleteQuestion(${qIndex})" class="text-slate-500 hover:text-red-400 p-1 transition"><i class="fa-solid fa-trash-can text-xs"></i></button>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-[11px] font-medium text-slate-400 mb-1">Question Text:</label>
+                        <input type="text" value="${q.question}" oninput="updateQuestionText(${qIndex}, this.value)" class="w-full bg-slate-950 border border-slate-800 rounded-lg p-2 text-xs text-white font-medium focus:outline-none focus:border-indigo-500">
+                    </div>
+
+                    <div class="space-y-2">
+                        <label class="block text-[11px] font-medium text-slate-400">Choices (Select radio button for correct answer):</label>
+                        ${optionsHTML}
+                    </div>
+                `;
+                container.appendChild(qCard);
+            });
+
+            updatePreview();
+        }
+
+        function updatePreview() {
+            document.getElementById('previewTitle').innerText = document.getElementById('quizTitleInput').value || "Untitled Quiz";
+            document.getElementById('previewDesc').innerText = document.getElementById('quizDescInput').value || "";
+
+            const previewList = document.getElementById('previewQuestionsList');
+            previewList.innerHTML = '';
+
+            quizData.forEach((q, qIndex) => {
+                const pCard = document.createElement('div');
+                pCard.className = "bg-slate-900/80 p-4 rounded-xl border border-slate-800/80 space-y-3";
+
+                let previewOptions = '';
+                q.options.forEach((opt, optIndex) => {
+                    previewOptions += `
+                        <label class="flex items-center space-x-3 p-2.5 bg-slate-950 hover:bg-slate-800 rounded-lg border border-slate-800 cursor-pointer transition">
+                            <input type="radio" name="preview_ans_${q.id}" value="${optIndex}" class="w-4 h-4 accent-emerald-500">
+                            <span class="text-xs text-slate-300 font-medium">${opt || 'Option ' + (optIndex + 1)}</span>
+                        </label>
+                    `;
+                });
+
+                pCard.innerHTML = `
+                    <div class="flex justify-between items-start">
+                        <h4 class="text-xs font-bold text-white flex space-x-2">
+                            <span class="text-indigo-400">${qIndex + 1}.</span>
+                            <span>${q.question || 'Type your question here...'}</span>
+                        </h4>
+                        <span class="text-[10px] bg-indigo-500/10 text-indigo-400 px-2 py-0.5 rounded border border-indigo-500/20 font-bold shrink-0">${q.points} Pts</span>
+                    </div>
+                    <div class="space-y-2 pt-1">
+                        ${previewOptions}
+                    </div>
+                `;
+                previewList.appendChild(pCard);
+            });
+        }
+
+        function addQuestion() {
+            quizData.push({
+                id: Date.now(),
+                question: "Panibagong Tanong...",
+                points: 5,
+                options: ["Option A", "Option B", "Option C", "Option D"],
+                correctIndex: 0
+            });
+            renderEditor();
+        }
+
+        function deleteQuestion(index) {
+            quizData.splice(index, 1);
+            renderEditor();
+        }
+
+        function updateQuestionText(index, val) {
+            quizData[index].question = val;
+            updatePreview();
+        }
+
+        function updateOptionText(qIndex, optIndex, val) {
+            quizData[qIndex].options[optIndex] = val;
+            updatePreview();
+        }
+
+        function setCorrectAnswer(qIndex, optIndex) {
+            quizData[qIndex].correctIndex = optIndex;
+        }
+
+        function updatePoints(qIndex, val) {
+            quizData[qIndex].points = parseInt(val) || 0;
+            updatePreview();
+        }
+
+        function submitTestQuiz() {
+            alert("🎉 Successful Test! Ang quiz setup mo ay perfectly functional at ready na para sa mga estudyante.");
+        }
+
+        function saveQuizToSupabase() {
+            alert("💾 Handa na ang JSON Data ng Quiz! Sa susunod na step, ikokonekta natin ito diretso sa Supabase database mo.");
+        }
+
+        renderEditor();
+    </script>
+</body>
+</html>

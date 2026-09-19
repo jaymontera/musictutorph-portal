@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MusicTutorPh - Lesson Syllabus (Add Subject)</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+        body { font-family: 'Inter', sans-serif; }
+    </style>
+</head>
+<body class="bg-slate-900 text-slate-100 flex h-screen overflow-hidden">
+
+    <!-- MAIN SIDEBAR MENU -->
+    <aside class="w-64 bg-slate-950 border-r border-slate-800 flex flex-col justify-between hidden md:flex shrink-0 overflow-y-auto">
+        <div>
+            <!-- Logo Header -->
+            <div class="p-6 border-b border-slate-800 flex items-center space-x-3 sticky top-0 bg-slate-950 z-10">
+                <div class="bg-indigo-600 text-white p-2 rounded-lg text-xl flex items-center justify-center">
+                    <i class="fa-solid fa-music"></i>
+                </div>
+                <div>
+                    <h1 class="font-bold text-lg tracking-wide text-white">MusicTutor<span class="text-indigo-400">PH</span></h1>
+                    <span class="text-xs text-slate-400">Teacher's Portal</span>
+                </div>
+            </div>
+
+            <!-- Navigation Links -->
+            <nav class="p-4 space-y-1">
+                <!-- 1. Dashboard -->
+                <a href="dashboard.html" class="w-full flex items-center space-x-3 px-4 py-2.5 text-slate-400 hover:bg-slate-800 hover:text-slate-200 rounded-lg font-medium transition text-left text-sm">
+                    <i class="fa-solid fa-chart-pie w-5 text-center"></i>
+                    <span>Dashboard</span>
+                </a>
+
+                <!-- 2. Group Lessons (Dropdown parent) -->
+                <div>
+                    <button onclick="toggleSubmenu('groupLessonsMenu', 'groupLessonsChevron')" class="w-full flex items-center justify-between px-4 py-2.5 text-slate-400 hover:bg-slate-800 hover:text-slate-200 rounded-lg font-medium transition text-sm">
+                        <div class="flex items-center space-x-3">
+                            <i class="fa-solid fa-people-group w-5 text-center"></i>
+                            <span>Group Lessons</span>
+                        </div>
+                        <i id="groupLessonsChevron" class="fa-solid fa-chevron-down text-xs transition-transform duration-200"></i>
+                    </button>
+                    <div id="groupLessonsMenu" class="pl-11 pr-2 py-1 space-y-1 hidden">
+                        <a href="group-students-data.html" class="block py-1.5 px-3 text-xs text-slate-400 hover:text-indigo-400 hover:bg-slate-900 rounded-md transition">Students Data</a>
+                        <a href="group-gradebook.html" class="block py-1.5 px-3 text-xs text-slate-400 hover:text-indigo-400 hover:bg-slate-900 rounded-md transition">Gradebook</a>
+                        <a href="group-assessment.html" class="block py-1.5 px-3 text-xs text-slate-400 hover:text-indigo-400 hover:bg-slate-900 rounded-md transition">Assessment</a>
+                    </div>
+                </div>
+
+                <!-- 3. One-on-One (Dropdown parent) -->
+                <div>
+                    <button onclick="toggleSubmenu('oneOnOneMenu', 'oneOnOneChevron')" class="w-full flex items-center justify-between px-4 py-2.5 text-slate-400 hover:bg-slate-800 hover:text-slate-200 rounded-lg font-medium transition text-sm">
+                        <div class="flex items-center space-x-3">
+                            <i class="fa-solid fa-user-graduate w-5 text-center"></i>
+                            <span>One-on-One</span>
+                        </div>
+                        <i id="oneOnOneChevron" class="fa-solid fa-chevron-down text-xs transition-transform duration-200"></i>
+                    </button>
+                    <div id="oneOnOneMenu" class="pl-11 pr-2 py-1 space-y-1 hidden">
+                        <a href="one-on-one-student-profile.html" class="block py-1.5 px-3 text-xs text-slate-400 hover:text-indigo-400 hover:bg-slate-900 rounded-md transition">Student Profile</a>
+                        <a href="one-on-one-gradebook.html" class="block py-1.5 px-3 text-xs text-slate-400 hover:text-indigo-400 hover:bg-slate-900 rounded-md transition">Gradebook</a>
+                        <a href="one-on-one-assessment.html" class="block py-1.5 px-3 text-xs text-slate-400 hover:text-indigo-400 hover:bg-slate-900 rounded-md transition">Assessment</a>
+                    </div>
+                </div>
+
+                <!-- 4. Lesson Library (Dropdown parent - ACTIVE SUBMENU) -->
+                <div>
+                    <button onclick="toggleSubmenu('lessonLibraryMenu', 'lessonLibraryChevron')" class="w-full flex items-center justify-between px-4 py-2.5 text-slate-200 bg-slate-800/60 rounded-lg font-medium transition text-sm">
+                        <div class="flex items-center space-x-3">
+                            <i class="fa-solid fa-book-open w-5 text-center text-indigo-400"></i>
+                            <span>Lesson Library</span>
+                        </div>
+                        <i id="lessonLibraryChevron" class="fa-solid fa-chevron-down text-xs transition-transform duration-200 rotate-180"></i>
+                    </button>
+                    <div id="lessonLibraryMenu" class="pl-11 pr-2 py-1 space-y-1">
+                        <a href="add-subject.html" class="block py-1.5 px-3 text-xs text-indigo-400 bg-indigo-600/20 font-semibold rounded-md transition">Add Subject</a>
+                    </div>
+                </div>
+
+                <!-- 5. Quiz Maker -->
+                <a href="quiz-maker.html" class="flex items-center space-x-3 px-4 py-2.5 text-slate-400 hover:bg-slate-800 hover:text-slate-200 rounded-lg font-medium transition text-sm">
+                    <i class="fa-solid fa-list-check w-5 text-center"></i>
+                    <span>Quiz Maker</span>
+                </a>
+
+                <!-- [Line Separator] -->
+                <div class="my-2 border-t border-slate-800/80"></div>
+
+                <!-- 6. Enrollment Forms -->
+                <a href="enrollment-forms.html" class="flex items-center space-x-3 px-4 py-2.5 text-slate-400 hover:bg-slate-800 hover:text-slate-200 rounded-lg font-medium transition text-sm">
+                    <i class="fa-solid fa-wpforms w-5 text-center"></i>
+                    <span>Enrollment Forms</span>
+                </a>
+
+                <!-- 7. Landing Pages -->
+                <a href="landing-pages.html" class="flex items-center space-x-3 px-4 py-2.5 text-slate-400 hover:bg-slate-800 hover:text-slate-200 rounded-lg font-medium transition text-sm">
+                    <i class="fa-solid fa-globe w-5 text-center"></i>
+                    <span>Landing Pages</span>
+                </a>
+
+                <!-- 8. Pre-Recorded Lessons -->
+                <a href="prerecorded-lessons.html" class="flex items-center space-x-3 px-4 py-2.5 text-slate-400 hover:bg-slate-800 hover:text-slate-200 rounded-lg font-medium transition text-sm">
+                    <i class="fa-solid fa-circle-play w-5 text-center"></i>
+                    <span>Pre-Recorded Lessons</span>
+                </a>
+
+                <!-- [Line Separator] -->
+                <div class="my-2 border-t border-slate-800/80"></div>
+
+                <!-- 9. Help -->
+                <a href="help.html" class="flex items-center space-x-3 px-4 py-2.5 text-slate-400 hover:bg-slate-800 hover:text-slate-200 rounded-lg font-medium transition text-sm">
+                    <i class="fa-solid fa-circle-question w-5 text-center"></i>
+                    <span>Help</span>
+                </a>
+            </nav>
+        </div>
+
+        <!-- Sidebar Footer User Profile -->
+        <div class="p-4 border-t border-slate-800">
+            <div class="bg-slate-900 p-3 rounded-lg border border-slate-800 mb-4">
+                <div class="flex justify-between items-center text-xs mb-1">
+                    <span class="text-slate-400">Current Plan</span>
+                    <span class="bg-emerald-500/20 text-emerald-400 px-2 py-0.5 rounded text-[10px] font-bold uppercase">Pro SaaS</span>
+                </div>
+                <p class="text-sm font-semibold">Teacher Plan</p>
+            </div>
+            <div class="flex items-center space-x-3">
+                <div class="w-10 h-10 rounded-full bg-indigo-600 text-white font-bold flex items-center justify-center text-sm border border-indigo-400/30">
+                    TJ
+                </div>
+                <div class="overflow-hidden">
+                    <p class="text-sm font-medium text-white truncate">Tutor Jay</p>
+                    <p class="text-xs text-slate-400 truncate">jay@musictutorph.com</p>
+                </div>
+            </div>
+        </div>
+    </aside>
+
+    <!-- MAIN CONTENT CONTAINER -->
+    <div class="flex-1 flex flex-col h-screen overflow-y-auto bg-slate-900">
+        
+        <!-- TOPBAR WITH QUICK ACTION BUTTONS -->
+        <header class="h-16 bg-slate-950 border-b border-slate-800 flex items-center justify-between px-6 sticky top-0 z-10 shrink-0">
+            <div class="flex items-center space-x-4">
+                <h2 class="text-xl font-bold text-white">Lesson Syllabus</h2>
+            </div>
+            
+            <div class="flex items-center space-x-3">
+                <button onclick="openModal('addGroupLessonModal')" class="bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-semibold px-4 py-2 rounded-lg transition flex items-center space-x-2 shadow-lg shadow-emerald-900/30">
+                    <i class="fa-solid fa-plus"></i>
+                    <span>Add New <strong class="font-bold">Group Lesson</strong></span>
+                </button>
+                <button onclick="openModal('addStudentModal')" class="bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-semibold px-4 py-2 rounded-lg transition flex items-center space-x-2 shadow-lg shadow-indigo-900/30">
+                    <i class="fa-solid fa-plus"></i>
+                    <span>Add New Student</span>
+                </button>
+            </div>
+        </header>
+
+        <!-- LESSON SYLLABUS MAIN CONTENT AREA (lesson-syllabus.html Content) -->
+        <main class="p-6 flex-1 flex gap-6 overflow-hidden">
+            
+            <!-- 1. LEFT PANE: LESSON TOPICS WITH ADD TOPIC BUTTON AT BOTTOM -->
+            <div class="w-64 bg-slate-950 border border-slate-800 rounded-xl p-5 shrink-0 flex flex-col justify-between shadow-xl">
+                <div class="space-y-4">
+                    <h3 class="font-bold text-white text-lg border-b border-slate-800 pb-3">Lesson Topics</h3>
+
+                    <div class="space-y-1.5 overflow-y-auto max-h-[calc(100vh-250px)]" id="topicsList">
+                        <button onclick="selectTopic('Note Names')" class="w-full text-left px-4 py-3 rounded-lg text-xs font-medium text-slate-400 hover:bg-slate-900 hover:text-white transition">
+                            Note Names
+                        </button>
+                        <button onclick="selectTopic('Major Scale')" class="w-full text-left px-4 py-3 rounded-lg text-xs font-bold text-white bg-slate-900 border border-slate-800 shadow-sm transition">
+                            Major Scale
+                        </button>
+                        <button onclick="selectTopic('Note Subdivision')" class="w-full text-left px-4 py-3 rounded-lg text-xs font-medium text-slate-400 hover:bg-slate-900 hover:text-white transition">
+                            Note Subdivision
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Add Topic Button at Bottom -->
+                <div class="pt-4 border-t border-slate-800">
+                    <button onclick="openModal('addTopicModal')" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white text-xs py-2.5 rounded-lg font-bold transition flex items-center justify-center space-x-2 shadow-lg shadow-emerald-900/30">
+                        <i class="fa-solid fa-plus"></i>
+                        <span>Add Topic</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- 2. MIDDLE PANE: LESSON CONTENTS -->
+            <div class="w-[420px] bg-slate-950 border border-slate-800 rounded-xl p-6 shrink-0 flex flex-col justify-between shadow-xl overflow-y-auto">
+                <div>
+                    <h3 class="font-bold text-white text-lg mb-4 border-b border-slate-800 pb-3">Lesson Contents</h3>
+
+                    <!-- Dynamic Topic Title -->
+                    <div class="mb-6">
+                        <h4 id="activeTopicTitle" class="text-lg font-bold text-white">Major Scale</h4>
+                    </div>
+
+                    <!-- Subtopics Container -->
+                    <div class="space-y-4 text-xs font-medium">
+                        
+                        <!-- SUBTOPIC 1 -->
+                        <div class="border border-slate-800 rounded-xl p-3.5 bg-slate-900/50 space-y-3">
+                            <button onclick="toggleFolder('subtopic1Content', 'subtopic1Chevron')" class="w-full flex items-center justify-between text-amber-400 font-bold text-sm">
+                                <span class="flex items-center space-x-2">
+                                    <i class="fa-solid fa-folder-open text-amber-400"></i>
+                                    <span>Subtopic 1</span>
+                                </span>
+                                <i id="subtopic1Chevron" class="fa-solid fa-chevron-down text-xs transition-transform duration-200"></i>
+                            </button>
+
+                            <div id="subtopic1Content" class="space-y-4 pt-2 pl-2">
+                                
+                                <!-- 1. Assessment Questions -->
+                                <div class="space-y-1.5">
+                                    <label class="block font-bold text-slate-200">Assessment Questions</label>
+                                    <div id="containerAssessment" class="space-y-1.5">
+                                        <input type="text" value="What are the scale degrees of C Major?" class="w-full bg-emerald-950/80 border border-emerald-500/50 text-emerald-300 font-semibold text-xs px-3 py-2 rounded-lg focus:outline-none">
+                                    </div>
+                                    <button onclick="addInput('containerAssessment', 'New Question')" class="w-full bg-emerald-950/60 hover:bg-emerald-900 border border-emerald-500/50 text-emerald-400 py-1.5 rounded-lg flex items-center justify-center transition mt-1">
+                                        <i class="fa-solid fa-plus text-xs"></i>
+                                    </button>
+                                </div>
+
+                                <!-- 2. Checkpoints -->
+                                <div class="space-y-1.5">
+                                    <label class="block font-bold text-slate-200">Checkpoints</label>
+                                    <div id="containerCheckpoints" class="space-y-1.5">
+                                        <input type="text" value="Identify W-W-H-W-W-W-H pattern" class="w-full bg-emerald-950/80 border border-emerald-500/50 text-emerald-300 font-semibold text-xs px-3 py-2 rounded-lg focus:outline-none">
+                                    </div>
+                                    <button onclick="addInput('containerCheckpoints', 'New Checkpoint')" class="w-full bg-emerald-950/60 hover:bg-emerald-900 border border-emerald-500/50 text-emerald-400 py-1.5 rounded-lg flex items-center justify-center transition mt-1">
+                                        <i class="fa-solid fa-plus text-xs"></i>
+                                    </button>
+                                </div>
+
+                                <!-- 3. Drills/Activities -->
+                                <div class="space-y-1.5">
+                                    <label class="block font-bold text-slate-200">Drills/Activities</label>
+                                    <div id="containerDrills" class="space-y-1.5">
+                                        <input type="text" value="Play C Major Scale Hands Together at 80 BPM" class="w-full bg-emerald-950/80 border border-emerald-500/50 text-emerald-300 font-semibold text-xs px-3 py-2 rounded-lg focus:outline-none">
+                                    </div>
+                                    <button onclick="addInput('containerDrills', 'New Activity')" class="w-full bg-emerald-950/60 hover:bg-emerald-900 border border-emerald-500/50 text-emerald-400 py-1.5 rounded-lg flex items-center justify-center transition mt-1">
+                                        <i class="fa-solid fa-plus text-xs"></i>
+                                    </button>
+                                </div>
+
+                                <!-- 4. Quizzes -->
+                                <div class="space-y-1.5">
+                                    <label class="block font-bold text-slate-200">Quizzes</label>
+                                    <div id="containerQuizzes" class="space-y-1.5">
+                                        <input type="text" value="Major Scale Key Identification Quiz 1" class="w-full bg-emerald-950/80 border border-emerald-500/50 text-emerald-300 font-semibold text-xs px-3 py-2 rounded-lg focus:outline-none">
+                                    </div>
+                                    <button onclick="addInput('containerQuizzes', 'New Quiz')" class="w-full bg-emerald-950/60 hover:bg-emerald-900 border border-emerald-500/50 text-emerald-400 py-1.5 rounded-lg flex items-center justify-center transition mt-1">
+                                        <i class="fa-solid fa-plus text-xs"></i>
+                                    </button>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <!-- SUBTOPIC 2 -->
+                        <div class="border border-slate-800 rounded-xl p-3.5 bg-slate-900/50 space-y-3">
+                            <button onclick="toggleFolder('subtopic2Content', 'subtopic2Chevron')" class="w-full flex items-center justify-between text-amber-400 font-bold text-sm">
+                                <span class="flex items-center space-x-2">
+                                    <i class="fa-solid fa-folder text-amber-400"></i>
+                                    <span>Subtopic 2</span>
+                                </span>
+                                <i id="subtopic2Chevron" class="fa-solid fa-chevron-right text-xs transition-transform duration-200"></i>
+                            </button>
+                            <div id="subtopic2Content" class="space-y-3 pt-2 pl-2 hidden">
+                                <p class="text-slate-400 text-xs italic">Subtopic 2 items...</p>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="flex items-center justify-end space-x-3 pt-6 border-t border-slate-800 mt-6">
+                    <button onclick="alert('Syllabus changes saved successfully!')" class="bg-emerald-600 hover:bg-emerald-500 text-white text-xs px-6 py-2.5 rounded-lg font-bold transition shadow-lg shadow-emerald-900/30">
+                        Save
+                    </button>
+                    <button onclick="alert('Topic deletion confirmed.')" class="bg-rose-600 hover:bg-rose-500 text-white text-xs px-5 py-2.5 rounded-lg font-bold transition shadow-lg shadow-rose-900/30">
+                        Delete Topic
+                    </button>
+                </div>
+            </div>
+
+            <!-- 3. RIGHT PANE: DRILLS/ACTIVITIES/QUIZZ PREVIEW -->
+            <div class="flex-1 bg-slate-950 border border-slate-800 rounded-xl p-6 flex flex-col justify-between shadow-xl overflow-y-auto">
+                <div class="w-full space-y-4">
+                    <h3 class="font-bold text-white text-lg border-b border-slate-800 pb-3">Drills/Activities/Quizz Preview</h3>
+
+                    <!-- Preview Mode Tabs -->
+                    <div class="flex space-x-2 border-b border-slate-800 pb-2">
+                        <button onclick="switchPreview('video')" id="tabVideo" class="px-3 py-1.5 rounded-lg bg-indigo-600 text-white text-xs font-bold transition">Video Player</button>
+                        <button onclick="switchPreview('audio')" id="tabAudio" class="px-3 py-1.5 rounded-lg bg-slate-800 text-slate-400 text-xs font-bold hover:text-white transition">Audio Player</button>
+                        <button onclick="switchPreview('image')" id="tabImage" class="px-3 py-1.5 rounded-lg bg-slate-800 text-slate-400 text-xs font-bold hover:text-white transition">Image Viewer</button>
+                    </div>
+
+                    <!-- PREVIEW CONTAINER AREA -->
+                    <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 flex flex-col items-center justify-center min-h-[360px]">
+                        
+                        <div id="previewVideo" class="w-full space-y-3">
+                            <div class="relative pb-[56.25%] h-0 bg-black rounded-lg overflow-hidden border border-slate-800">
+                                <iframe class="absolute top-0 left-0 w-full h-full" src="https://www.youtube.com/embed/dQw4w9WgXcQ" allowfullscreen></iframe>
+                            </div>
+                            <h4 class="text-sm font-bold text-white text-center">Exercise Drill: Major Scale Fingering Technique</h4>
+                        </div>
+
+                        <div id="previewAudio" class="w-full space-y-4 hidden flex-col items-center justify-center py-10">
+                            <div class="w-20 h-20 bg-indigo-600/20 text-indigo-400 rounded-full flex items-center justify-center text-3xl border border-indigo-500/30 shadow-lg">
+                                <i class="fa-solid fa-music"></i>
+                            </div>
+                            <div class="text-center">
+                                <h4 class="text-sm font-bold text-white">C Major Scale Ear Training Test</h4>
+                                <p class="text-xs text-slate-400">Listen carefully and identify the root note</p>
+                            </div>
+                            <audio controls class="w-full max-w-md mt-2">
+                                <source src="https://www.w3schools.com/html/horse.mp3" type="audio/mpeg">
+                            </audio>
+                        </div>
+
+                        <div id="previewImage" class="w-full space-y-3 hidden flex-col items-center">
+                            <div class="rounded-lg overflow-hidden border border-slate-800 bg-slate-950 p-2">
+                                <img src="https://via.placeholder.com/600x320/1e1b4b/ffffff?text=Major+Scale+Piano+Notation+Sheet" class="w-full rounded object-contain">
+                            </div>
+                            <h4 class="text-sm font-bold text-white text-center">Sheet Music Reference: C Major Scale Notation</h4>
+                        </div>
+
+                    </div>
+                </div>
+
+                <p class="text-xs text-slate-500 text-center pt-4">
+                    Preview Mode for Student Drills & Interactive Materials
+                </p>
+            </div>
+
+        </main>
+    </div>
+
+    <!-- MODAL WINDOWS -->
+    <div id="addTopicModal" class="fixed inset-0 bg-black/70 backdrop-blur-md hidden flex items-center justify-center p-4 z-50">
+        <div class="bg-slate-950 border border-slate-800 rounded-xl w-full max-w-md overflow-hidden shadow-2xl">
+            <div class="p-5 border-b border-slate-800 flex justify-between items-center bg-slate-900/50">
+                <h3 class="text-base font-bold text-white flex items-center space-x-2">
+                    <i class="fa-solid fa-folder-plus text-emerald-400"></i>
+                    <span>Add New Topic</span>
+                </h3>
+                <button onclick="closeModal('addTopicModal')" class="text-slate-400 hover:text-white p-1">
+                    <i class="fa-solid fa-xmark text-lg"></i>
+                </button>
+            </div>
+            
+            <form onsubmit="createNewTopic(event)" class="p-6 space-y-4">
+                <div>
+                    <label class="block text-xs font-medium text-slate-300 mb-1">Topic Name:</label>
+                    <input type="text" id="newTopicTitleInput" placeholder="e.g. Arpeggios & Chords" required class="w-full bg-slate-900 border border-slate-800 rounded-lg p-2.5 text-xs text-white focus:outline-none focus:border-emerald-500">
+                </div>
+
+                <div class="pt-4 border-t border-slate-800 flex justify-end space-x-3">
+                    <button type="button" onclick="closeModal('addTopicModal')" class="px-4 py-2 text-xs text-slate-400 hover:text-white font-medium">Cancel</button>
+                    <button type="submit" class="bg-emerald-600 hover:bg-emerald-500 text-white text-xs px-5 py-2 rounded-lg font-semibold transition shadow-md shadow-emerald-900/20">Create Topic</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        function openModal(modalId) { document.getElementById(modalId).classList.remove('hidden'); }
+        function closeModal(modalId) { document.getElementById(modalId).classList.add('hidden'); }
+        function toggleSubmenu(menuId, chevronId) {
+            const menu = document.getElementById(menuId);
+            const chevron = document.getElementById(chevronId);
+            if(menu) menu.classList.toggle('hidden');
+            if(chevron) chevron.classList.toggle('rotate-180');
+        }
+        function selectTopic(title) {
+            document.getElementById('activeTopicTitle').innerText = title;
+        }
+        function toggleFolder(contentId, chevronId) {
+            const content = document.getElementById(contentId);
+            const chevron = document.getElementById(chevronId);
+            content.classList.toggle('hidden');
+            chevron.classList.toggle('rotate-90');
+        }
+        function addInput(containerId, placeholderText) {
+            const container = document.getElementById(containerId);
+            const wrapper = document.createElement('div');
+            wrapper.className = "flex items-center space-x-2";
+            wrapper.innerHTML = `
+                <input type="text" placeholder="${placeholderText}" class="w-full bg-emerald-950/80 border border-emerald-500/50 text-emerald-300 font-semibold text-xs px-3 py-2 rounded-lg focus:outline-none">
+                <button onclick="this.parentElement.remove()" class="text-rose-400 hover:text-rose-300 p-1"><i class="fa-solid fa-xmark text-xs"></i></button>
+            `;
+            container.appendChild(wrapper);
+        }
+        function switchPreview(mode) {
+            const pVideo = document.getElementById('previewVideo');
+            const pAudio = document.getElementById('previewAudio');
+            const pImage = document.getElementById('previewImage');
+            const tVideo = document.getElementById('tabVideo');
+            const tAudio = document.getElementById('tabAudio');
+            const tImage = document.getElementById('tabImage');
+
+            [tVideo, tAudio, tImage].forEach(tab => {
+                tab.className = "px-3 py-1.5 rounded-lg bg-slate-800 text-slate-400 text-xs font-bold hover:text-white transition";
+            });
+
+            pVideo.classList.add('hidden');
+            pAudio.classList.add('hidden');
+            pAudio.classList.remove('flex');
+            pImage.classList.add('hidden');
+            pImage.classList.remove('flex');
+
+            if (mode === 'video') {
+                pVideo.classList.remove('hidden');
+                tVideo.className = "px-3 py-1.5 rounded-lg bg-indigo-600 text-white text-xs font-bold transition";
+            } else if (mode === 'audio') {
+                pAudio.classList.remove('hidden');
+                pAudio.classList.add('flex');
+                tAudio.className = "px-3 py-1.5 rounded-lg bg-indigo-600 text-white text-xs font-bold transition";
+            } else if (mode === 'image') {
+                pImage.classList.remove('hidden');
+                pImage.classList.add('flex');
+                tImage.className = "px-3 py-1.5 rounded-lg bg-indigo-600 text-white text-xs font-bold transition";
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MusicTutorPH - Group Assessment</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+        body { font-family: 'Inter', sans-serif; }
+    </style>
+</head>
+<body class="bg-slate-900 text-slate-100 flex h-screen overflow-hidden">
+
+    <!-- MAIN SIDEBAR MENU -->
+    <aside class="w-64 bg-slate-950 border-r border-slate-800 flex flex-col justify-between hidden md:flex shrink-0 overflow-y-auto">
+        <div>
+            <!-- Logo Header -->
+            <div class="p-6 border-b border-slate-800 flex items-center space-x-3 sticky top-0 bg-slate-950 z-10">
+                <div class="bg-indigo-600 text-white p-2 rounded-lg text-xl flex items-center justify-center">
+                    <i class="fa-solid fa-music"></i>
+                </div>
+                <div>
+                    <h1 class="font-bold text-lg tracking-wide text-white">MusicTutor<span class="text-indigo-400">PH</span></h1>
+                    <span class="text-xs text-slate-400">Teacher's Portal</span>
+                </div>
+            </div>
+
+            <!-- Navigation Links -->
+            <nav class="p-4 space-y-1">
+                <!-- 1. Dashboard -->
+                <a href="dashboard.html" class="w-full flex items-center space-x-3 px-4 py-2.5 text-slate-400 hover:bg-slate-800 hover:text-slate-200 rounded-lg font-medium transition text-left text-sm">
+                    <i class="fa-solid fa-chart-pie w-5 text-center"></i>
+                    <span>Dashboard</span>
+                </a>
+
+                <!-- 2. Group Lessons (Dropdown parent - ACTIVE SUBMENU) -->
+                <div>
+                    <button onclick="toggleSubmenu('groupLessonsMenu', 'groupLessonsChevron')" class="w-full flex items-center justify-between px-4 py-2.5 text-slate-200 bg-slate-800/60 rounded-lg font-medium transition text-sm">
+                        <div class="flex items-center space-x-3">
+                            <i class="fa-solid fa-people-group w-5 text-center text-indigo-400"></i>
+                            <span>Group Lessons</span>
+                        </div>
+                        <i id="groupLessonsChevron" class="fa-solid fa-chevron-down text-xs transition-transform duration-200 rotate-180"></i>
+                    </button>
+                    <div id="groupLessonsMenu" class="pl-11 pr-2 py-1 space-y-1">
+                        <a href="group-students-data.html" class="block py-1.5 px-3 text-xs text-slate-400 hover:text-indigo-400 hover:bg-slate-900 rounded-md transition">Students Data</a>
+                        <a href="group-gradebook.html" class="block py-1.5 px-3 text-xs text-slate-400 hover:text-indigo-400 hover:bg-slate-900 rounded-md transition">Gradebook</a>
+                        <a href="group-assessment.html" class="block py-1.5 px-3 text-xs text-indigo-400 bg-indigo-600/20 font-semibold rounded-md transition">Assessment</a>
+                    </div>
+                </div>
+
+                <!-- 3. One-on-One (Dropdown parent) -->
+                <div>
+                    <button onclick="toggleSubmenu('oneOnOneMenu', 'oneOnOneChevron')" class="w-full flex items-center justify-between px-4 py-2.5 text-slate-400 hover:bg-slate-800 hover:text-slate-200 rounded-lg font-medium transition text-sm">
+                        <div class="flex items-center space-x-3">
+                            <i class="fa-solid fa-user-graduate w-5 text-center"></i>
+                            <span>One-on-One</span>
+                        </div>
+                        <i id="oneOnOneChevron" class="fa-solid fa-chevron-down text-xs transition-transform duration-200"></i>
+                    </button>
+                    <div id="oneOnOneMenu" class="pl-11 pr-2 py-1 space-y-1 hidden">
+                        <a href="one-on-one-student-profile.html" class="block py-1.5 px-3 text-xs text-slate-400 hover:text-indigo-400 hover:bg-slate-900 rounded-md transition">Student Profile</a>
+                        <a href="one-on-one-gradebook.html" class="block py-1.5 px-3 text-xs text-slate-400 hover:text-indigo-400 hover:bg-slate-900 rounded-md transition">Gradebook</a>
+                        <a href="one-on-one-assessment.html" class="block py-1.5 px-3 text-xs text-slate-400 hover:text-indigo-400 hover:bg-slate-900 rounded-md transition">Assessment</a>
+                    </div>
+                </div>
+
+                <!-- 4. Lesson Library (Dropdown parent) -->
+                <div>
+                    <button onclick="toggleSubmenu('lessonLibraryMenu', 'lessonLibraryChevron')" class="w-full flex items-center justify-between px-4 py-2.5 text-slate-400 hover:bg-slate-800 hover:text-slate-200 rounded-lg font-medium transition text-sm">
+                        <div class="flex items-center space-x-3">
+                            <i class="fa-solid fa-book-open w-5 text-center"></i>
+                            <span>Lesson Library</span>
+                        </div>
+                        <i id="lessonLibraryChevron" class="fa-solid fa-chevron-down text-xs transition-transform duration-200"></i>
+                    </button>
+                    <div id="lessonLibraryMenu" class="pl-11 pr-2 py-1 space-y-1 hidden">
+                        <a href="add-subject.html" class="block py-1.5 px-3 text-xs text-slate-400 hover:text-indigo-400 hover:bg-slate-900 rounded-md transition">Add Subject</a>
+                    </div>
+                </div>
+
+                <!-- 5. Quiz Maker -->
+                <a href="quiz-maker.html" class="flex items-center space-x-3 px-4 py-2.5 text-slate-400 hover:bg-slate-800 hover:text-slate-200 rounded-lg font-medium transition text-sm">
+                    <i class="fa-solid fa-list-check w-5 text-center"></i>
+                    <span>Quiz Maker</span>
+                </a>
+
+                <!-- [Line Separator] -->
+                <div class="my-2 border-t border-slate-800/80"></div>
+
+                <!-- 6. Enrollment Forms -->
+                <a href="enrollment-forms.html" class="flex items-center space-x-3 px-4 py-2.5 text-slate-400 hover:bg-slate-800 hover:text-slate-200 rounded-lg font-medium transition text-sm">
+                    <i class="fa-solid fa-wpforms w-5 text-center"></i>
+                    <span>Enrollment Forms</span>
+                </a>
+
+                <!-- 7. Landing Pages -->
+                <a href="landing-pages.html" class="flex items-center space-x-3 px-4 py-2.5 text-slate-400 hover:bg-slate-800 hover:text-slate-200 rounded-lg font-medium transition text-sm">
+                    <i class="fa-solid fa-globe w-5 text-center"></i>
+                    <span>Landing Pages</span>
+                </a>
+
+                <!-- 8. Pre-Recorded Lessons -->
+                <a href="prerecorded-lessons.html" class="flex items-center space-x-3 px-4 py-2.5 text-slate-400 hover:bg-slate-800 hover:text-slate-200 rounded-lg font-medium transition text-sm">
+                    <i class="fa-solid fa-circle-play w-5 text-center"></i>
+                    <span>Pre-Recorded Lessons</span>
+                </a>
+
+                <!-- [Line Separator] -->
+                <div class="my-2 border-t border-slate-800/80"></div>
+
+                <!-- 9. Help -->
+                <a href="help.html" class="flex items-center space-x-3 px-4 py-2.5 text-slate-400 hover:bg-slate-800 hover:text-slate-200 rounded-lg font-medium transition text-sm">
+                    <i class="fa-solid fa-circle-question w-5 text-center"></i>
+                    <span>Help</span>
+                </a>
+            </nav>
+        </div>
+
+        <!-- Sidebar Footer User Profile -->
+        <div class="p-4 border-t border-slate-800">
+            <div class="bg-slate-900 p-3 rounded-lg border border-slate-800 mb-4">
+                <div class="flex justify-between items-center text-xs mb-1">
+                    <span class="text-slate-400">Current Plan</span>
+                    <span class="bg-emerald-500/20 text-emerald-400 px-2 py-0.5 rounded text-[10px] font-bold uppercase">Pro SaaS</span>
+                </div>
+                <p class="text-sm font-semibold">Teacher Plan</p>
+            </div>
+            <div class="flex items-center space-x-3">
+                <div class="w-10 h-10 rounded-full bg-indigo-600 text-white font-bold flex items-center justify-center text-sm border border-indigo-400/30">
+                    TJ
+                </div>
+                <div class="overflow-hidden">
+                    <p class="text-sm font-medium text-white truncate">Tutor Jay</p>
+                    <p class="text-xs text-slate-400 truncate">jay@musictutorph.com</p>
+                </div>
+            </div>
+        </div>
+    </aside>
+
+    <!-- MAIN CONTENT CONTAINER -->
+    <div class="flex-1 flex flex-col h-screen overflow-hidden bg-slate-900">
+        
+        <!-- TOPBAR WITH STUDENT SELECTOR -->
+        <header class="h-16 bg-slate-950 border-b border-slate-800 flex items-center justify-between px-6 shrink-0">
+            <div class="flex items-center space-x-4">
+                <h2 class="text-lg font-bold text-white flex items-center space-x-2">
+                    <i class="fa-solid fa-clipboard-check text-indigo-400"></i>
+                    <span>Group Assessment Engine</span>
+                </h2>
+                <!-- Student Switcher Dropdown -->
+                <div class="flex items-center space-x-2 bg-slate-900 border border-slate-800 px-3 py-1.5 rounded-lg">
+                    <span class="text-xs text-slate-400">Evaluating Student:</span>
+                    <select id="studentSelect" onchange="switchStudent()" class="bg-transparent text-xs font-bold text-indigo-400 focus:outline-none">
+                        <option value="Juan Lumad">Juan Lumad (Piano Intermediate)</option>
+                        <option value="Maria Santos">Maria Santos (Keyboard Beginner)</option>
+                    </select>
+                </div>
+            </div>
+            
+            <div class="flex items-center space-x-3">
+                <button onclick="saveAssessment()" class="bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-semibold px-4 py-2 rounded-lg transition flex items-center space-x-2 shadow-lg shadow-indigo-900/30">
+                    <i class="fa-solid fa-floppy-disk"></i>
+                    <span>Save Assessment & Update Grade Card</span>
+                </button>
+            </div>
+        </header>
+
+        <!-- TWO-COLUMN WORKFLOW MAIN GRID (Assessment.html Content) -->
+        <main class="flex-1 grid grid-cols-1 lg:grid-cols-12 overflow-hidden">
+            
+            <!-- LEFT COLUMN: TEACHER ASSESSMENT CHECKLIST & RATING (5 COLUMNS) -->
+            <section class="lg:col-span-5 border-r border-slate-800 p-6 overflow-y-auto space-y-6 bg-slate-950/60">
+                
+                <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+                    <div class="flex items-center space-x-2">
+                        <div class="w-7 h-7 rounded bg-indigo-600/20 text-indigo-400 flex items-center justify-center text-xs border border-indigo-500/30">
+                            <i class="fa-solid fa-user-gear"></i>
+                        </div>
+                        <h3 class="text-sm font-bold text-white tracking-wide uppercase">Student Assessment</h3>
+                    </div>
+                    <span class="text-[10px] bg-slate-900 text-slate-400 px-2 py-0.5 rounded border border-slate-800 font-mono">Synced with Lesson Library</span>
+                </div>
+
+                <!-- DYNAMIC TOPICS CONTAINER (TEACHER EVALUATION VIEW) -->
+                <div id="teacherAssessmentContainer" class="space-y-6">
+                    
+                    <!-- TOPIC 1 -->
+                    <div class="bg-slate-900/90 border border-slate-800 rounded-xl p-5 space-y-4">
+                        <h4 class="text-base font-extrabold text-indigo-400 border-b border-slate-800/80 pb-2 flex justify-between items-center">
+                            <span>TOPIC #1: Major Scale Fundamentals</span>
+                        </h4>
+
+                        <!-- Assessment Questions -->
+                        <div class="space-y-2">
+                            <p class="text-xs font-bold text-slate-300 uppercase tracking-wider">Assessment Questions / Oral Check:</p>
+                            <div class="space-y-1.5 pl-2 text-xs text-slate-400">
+                                <label class="flex items-center space-x-2">
+                                    <input type="checkbox" checked class="rounded border-slate-800 bg-slate-950 text-indigo-500 focus:ring-0">
+                                    <span>Sample Question #1: What is the relative minor of C Major?</span>
+                                </label>
+                                <label class="flex items-center space-x-2">
+                                    <input type="checkbox" checked class="rounded border-slate-800 bg-slate-950 text-indigo-500 focus:ring-0">
+                                    <span>Sample Question #2: Identify the Whole-Whole-Half step formula.</span>
+                                </label>
+                                <label class="flex items-center space-x-2">
+                                    <input type="checkbox" class="rounded border-slate-800 bg-slate-950 text-indigo-500 focus:ring-0">
+                                    <span>Sample Question #3: Play C Major Arpeggio right hand.</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Checkpoints Evaluation -->
+                        <div class="space-y-3 pt-2 border-t border-slate-800/60">
+                            <p class="text-xs font-bold text-slate-300 uppercase tracking-wider">Technical Checkpoints:</p>
+                            
+                            <div class="grid grid-cols-1 gap-2 text-xs">
+                                <div class="flex items-center justify-between bg-slate-950 p-2.5 rounded-lg border border-slate-800">
+                                    <span class="text-slate-300">Posture</span>
+                                    <select class="bg-slate-900 text-[11px] text-emerald-400 border border-slate-800 rounded px-2 py-1 focus:outline-none">
+                                        <option>Passed (Good)</option>
+                                        <option>Needs Work</option>
+                                    </select>
+                                </div>
+                                <div class="flex items-center justify-between bg-slate-950 p-2.5 rounded-lg border border-slate-800">
+                                    <span class="text-slate-300">Hand Position</span>
+                                    <select class="bg-slate-900 text-[11px] text-emerald-400 border border-slate-800 rounded px-2 py-1 focus:outline-none">
+                                        <option>Passed (Good)</option>
+                                        <option>Needs Work</option>
+                                    </select>
+                                </div>
+                                <div class="flex items-center justify-between bg-slate-950 p-2.5 rounded-lg border border-slate-800">
+                                    <span class="text-slate-300">Arm and Wrist Tension</span>
+                                    <select class="bg-slate-900 text-[11px] text-rose-400 border border-slate-800 rounded px-2 py-1 focus:outline-none">
+                                        <option selected>Needs Work (Tense Wrist)</option>
+                                        <option>Passed (Good)</option>
+                                    </select>
+                                </div>
+                                <div class="flex items-center justify-between bg-slate-950 p-2.5 rounded-lg border border-slate-800">
+                                    <span class="text-slate-300">Note Recognition</span>
+                                    <select class="bg-slate-900 text-[11px] text-emerald-400 border border-slate-800 rounded px-2 py-1 focus:outline-none">
+                                        <option>Passed (Good)</option>
+                                        <option>Needs Work</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- TOPIC 2 -->
+                    <div class="bg-slate-900/90 border border-slate-800 rounded-xl p-5 space-y-4">
+                        <h4 class="text-base font-extrabold text-indigo-400 border-b border-slate-800/80 pb-2">
+                            TOPIC #2: Finger Dexterity & Inversons
+                        </h4>
+
+                        <div class="space-y-2">
+                            <p class="text-xs font-bold text-slate-300 uppercase tracking-wider">Assessment Questions / Oral Check:</p>
+                            <div class="space-y-1.5 pl-2 text-xs text-slate-400">
+                                <label class="flex items-center space-x-2">
+                                    <input type="checkbox" checked class="rounded border-slate-800 bg-slate-950 text-indigo-500 focus:ring-0">
+                                    <span>Sample Question #1: What is the 1st inversion of G Major?</span>
+                                </label>
+                                <label class="flex items-center space-x-2">
+                                    <input type="checkbox" class="rounded border-slate-800 bg-slate-950 text-indigo-500 focus:ring-0">
+                                    <span>Sample Question #2: Execute Hanon #1 without speed drop.</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="space-y-3 pt-2 border-t border-slate-800/60">
+                            <p class="text-xs font-bold text-slate-300 uppercase tracking-wider">Technical Checkpoints:</p>
+                            <div class="grid grid-cols-1 gap-2 text-xs">
+                                <div class="flex items-center justify-between bg-slate-950 p-2.5 rounded-lg border border-slate-800">
+                                    <span class="text-slate-300">Metronome Sync</span>
+                                    <select class="bg-slate-900 text-[11px] text-rose-400 border border-slate-800 rounded px-2 py-1 focus:outline-none">
+                                        <option selected>Needs Work (Off-beat)</option>
+                                        <option>Passed (Good)</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+
+
+            <!-- RIGHT COLUMN: DIGITAL GRADE CARD & LIVE ROADMAP (7 COLUMNS) -->
+            <section class="lg:col-span-7 p-6 overflow-y-auto bg-slate-900 space-y-6">
+                
+                <!-- STUDENT HEADER & METRICS -->
+                <div class="bg-slate-950 border border-slate-800 rounded-2xl p-6 shadow-xl space-y-6">
+                    <div class="text-center space-y-1">
+                        <h2 id="studentNameDisplay" class="text-2xl font-black text-white tracking-wide">Juan Lumad</h2>
+                        <p class="text-xs font-bold text-indigo-400 tracking-widest uppercase">Digital Grade Card</p>
+                    </div>
+
+                    <!-- Metric Badges -->
+                    <div class="grid grid-cols-3 gap-4 max-w-lg mx-auto text-center">
+                        <div class="bg-slate-900 border border-slate-800 rounded-xl p-3 flex flex-col items-center justify-center">
+                            <i class="fa-solid fa-star text-amber-400 text-xl mb-1"></i>
+                            <span class="text-[10px] text-slate-400 font-bold uppercase">Stars Earned</span>
+                            <span class="text-sm font-extrabold text-white mt-0.5">(9.2 / 20)</span>
+                        </div>
+                        <div class="bg-slate-900 border border-slate-800 rounded-xl p-3 flex flex-col items-center justify-center">
+                            <span class="text-2xl font-black text-indigo-400">46%</span>
+                            <span class="text-[10px] text-slate-400 font-bold uppercase mt-1">Total Score</span>
+                        </div>
+                        <div class="bg-slate-900 border border-slate-800 rounded-xl p-3 flex flex-col items-center justify-center">
+                            <i class="fa-solid fa-trophy text-amber-500 text-xl mb-1"></i>
+                            <span class="text-[10px] text-slate-400 font-bold uppercase">Trophy Tier</span>
+                            <span class="text-xs font-extrabold text-amber-400">2 / 4</span>
+                        </div>
+                    </div>
+
+                    <!-- Lesson Road Map Cards Horizontal Scroll -->
+                    <div class="space-y-3 pt-2 border-t border-slate-800/80">
+                        <div class="flex items-center space-x-2 text-slate-300 text-xs font-bold uppercase tracking-wider">
+                            <i class="fa-solid fa-map text-indigo-400"></i>
+                            <span>Lesson Road Map</span>
+                        </div>
+
+                        <div class="flex space-x-3 overflow-x-auto pb-2 scrollbar-thin">
+                            <div class="min-w-[200px] bg-slate-900 p-3.5 rounded-xl border border-indigo-500/30 space-y-2 shrink-0">
+                                <div class="flex justify-between items-center text-[10px] font-bold">
+                                    <span class="text-indigo-400 uppercase">⭐ Session 01</span>
+                                    <span class="text-emerald-400">97%</span>
+                                </div>
+                                <h5 class="text-xs font-bold text-white truncate">Fundamentals & Scales</h5>
+                                <p class="text-[10px] text-slate-400 truncate">Posture, hand position, and basic scale</p>
+                                <p class="text-[10px] text-amber-400 font-medium">★ C Major scale</p>
+                            </div>
+
+                            <div class="min-w-[200px] bg-slate-900 p-3.5 rounded-xl border border-slate-800 space-y-2 shrink-0">
+                                <div class="flex justify-between items-center text-[10px] font-bold">
+                                    <span class="text-indigo-400 uppercase">⭐ Session 02</span>
+                                    <span class="text-emerald-400">97%</span>
+                                </div>
+                                <h5 class="text-xs font-bold text-white truncate">Triad Inversions & Drills</h5>
+                                <p class="text-[10px] text-slate-400 truncate">Smooth shift from C Major to G</p>
+                                <p class="text-[10px] text-amber-400 font-medium">★ Inversion exercises</p>
+                            </div>
+
+                            <div class="min-w-[200px] bg-slate-900 p-3.5 rounded-xl border border-slate-800 opacity-60 space-y-2 shrink-0">
+                                <div class="flex justify-between items-center text-[10px] font-bold">
+                                    <span class="text-indigo-400 uppercase">⭐ Session 03</span>
+                                    <span class="text-slate-500">0%</span>
+                                </div>
+                                <h5 class="text-xs font-bold text-white truncate">Left Hand Arpeggio</h5>
+                                <p class="text-[10px] text-slate-400 truncate">Dexterity in broken chords</p>
+                                <p class="text-[10px] text-amber-400 font-medium">★ Rhythm syncopation</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TOPIC DRILLS & EXERCISES CHECKLIST -->
+                <div class="space-y-6">
+                    <div class="bg-slate-950 border border-slate-800 rounded-xl p-5 space-y-3">
+                        <h4 class="text-sm font-extrabold text-white tracking-wide uppercase">TOPIC #1</h4>
+                        <div class="space-y-2">
+                            <label class="flex items-center space-x-3 p-3 bg-slate-900 hover:bg-slate-800/80 rounded-xl border border-slate-800 cursor-pointer transition">
+                                <input type="checkbox" checked class="w-4 h-4 accent-indigo-500 rounded">
+                                <span class="text-xs text-slate-200 font-medium">C Major Scale Drill Right Hand</span>
+                            </label>
+                            <label class="flex items-center space-x-3 p-3 bg-slate-900 hover:bg-slate-800/80 rounded-xl border border-slate-800 cursor-pointer transition">
+                                <input type="checkbox" checked class="w-4 h-4 accent-indigo-500 rounded">
+                                <span class="text-xs text-slate-200 font-medium">C Major Scale Drill Left Hand</span>
+                            </label>
+                            <label class="flex items-center space-x-3 p-3 bg-slate-900 hover:bg-slate-800/80 rounded-xl border border-slate-800 border-rose-500/30 bg-rose-500/5 cursor-pointer transition">
+                                <input type="checkbox" class="w-4 h-4 accent-indigo-500 rounded">
+                                <span class="text-xs text-rose-300 font-medium">C Major Scale Drill Both Hands (Unchecked - Failed)</span>
+                            </label>
+                            <label class="flex items-center space-x-3 p-3 bg-slate-900 hover:bg-slate-800/80 rounded-xl border border-slate-800 border-rose-500/30 bg-rose-500/5 cursor-pointer transition">
+                                <input type="checkbox" class="w-4 h-4 accent-indigo-500 rounded">
+                                <span class="text-xs text-rose-300 font-medium">C Major Scale Drill Both Hands Fast Tempo (Unchecked - Failed)</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="bg-slate-950 border border-slate-800 rounded-xl p-5 space-y-3">
+                        <h4 class="text-sm font-extrabold text-white tracking-wide uppercase">TOPIC #2</h4>
+                        <div class="space-y-2">
+                            <label class="flex items-center space-x-3 p-3 bg-slate-900 hover:bg-slate-800/80 rounded-xl border border-slate-800 cursor-pointer transition">
+                                <input type="checkbox" checked class="w-4 h-4 accent-indigo-500 rounded">
+                                <span class="text-xs text-slate-200 font-medium">Hanon Exercise 01</span>
+                            </label>
+                            <label class="flex items-center space-x-3 p-3 bg-slate-900 hover:bg-slate-800/80 rounded-xl border border-slate-800 border-rose-500/30 bg-rose-500/5 cursor-pointer transition">
+                                <input type="checkbox" class="w-4 h-4 accent-indigo-500 rounded">
+                                <span class="text-xs text-rose-300 font-medium">Hanon Exercise 02 (Unchecked - Failed)</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- AUTOMATIC GENERATED NEXT-SESSION FOCUS -->
+                <div class="bg-gradient-to-r from-indigo-950/80 to-purple-950/80 border border-indigo-500/40 rounded-2xl p-5 space-y-3">
+                    <div class="flex items-center justify-between">
+                        <h4 class="text-xs font-bold text-indigo-300 uppercase tracking-wider flex items-center">
+                            <i class="fa-solid fa-lightbulb text-amber-400 mr-2"></i> Auto-Generated Next Session Syllabus (Focus Areas)
+                        </h4>
+                        <span class="text-[10px] bg-indigo-500/20 text-indigo-300 px-2 py-0.5 rounded font-mono">Dynamic Guide</span>
+                    </div>
+                    <p class="text-xs text-slate-300">
+                        Batay sa mga unchecked exercises at "Needs Work" checkpoints sa itaas, ito ang dapat na maging priority drill para sa susunod na pagkikita:
+                    </p>
+                    <ul id="nextSyllabusList" class="space-y-1.5 pl-4 text-xs text-amber-300 list-disc font-medium">
+                        <li>Focus Drill: C Major Scale Drill Both Hands (Rhythm Synchronization)</li>
+                        <li>Focus Drill: C Major Scale Drill Both Hands Fast Tempo</li>
+                        <li>Focus Drill: Hanon Exercise 02</li>
+                        <li>Checkpoint Focus: Arm and Wrist Tension exercises</li>
+                    </ul>
+                </div>
+
+            </section>
+
+        </main>
+    </div>
+
+    <script>
+        function toggleSubmenu(menuId, chevronId) {
+            const menu = document.getElementById(menuId);
+            const chevron = document.getElementById(chevronId);
+            if(menu) menu.classList.toggle('hidden');
+            if(chevron) chevron.classList.toggle('rotate-180');
+        }
+        function switchStudent() {
+            const selected = document.getElementById('studentSelect').value;
+            document.getElementById('studentNameDisplay').innerText = selected;
+        }
+        function saveAssessment() {
+            alert("💾 Assessment saved! Ang mga failed exercises ay awtomatikong na-update sa personalized syllabus dashboard ni " + document.getElementById('studentSelect').value);
+        }
+    </script>
+</body>
+</html>

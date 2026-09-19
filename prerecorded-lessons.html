@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MusicTutorPh - Pre-Recorded Lessons</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+        body { font-family: 'Inter', sans-serif; }
+    </style>
+</head>
+<body class="bg-slate-900 text-slate-100 flex h-screen overflow-hidden">
+
+    <!-- MAIN SIDEBAR MENU -->
+    <aside class="w-64 bg-slate-950 border-r border-slate-800 flex flex-col justify-between hidden md:flex shrink-0 overflow-y-auto">
+        <div>
+            <!-- Logo Header -->
+            <div class="p-6 border-b border-slate-800 flex items-center space-x-3 sticky top-0 bg-slate-950 z-10">
+                <div class="bg-indigo-600 text-white p-2 rounded-lg text-xl flex items-center justify-center">
+                    <i class="fa-solid fa-music"></i>
+                </div>
+                <div>
+                    <h1 class="font-bold text-lg tracking-wide text-white">MusicTutor<span class="text-indigo-400">PH</span></h1>
+                    <span class="text-xs text-slate-400">Teacher's Portal</span>
+                </div>
+            </div>
+
+            <!-- Navigation Links -->
+            <nav class="p-4 space-y-1">
+                <!-- 1. Dashboard -->
+                <a href="dashboard.html" class="w-full flex items-center space-x-3 px-4 py-2.5 text-slate-400 hover:bg-slate-800 hover:text-slate-200 rounded-lg font-medium transition text-left text-sm">
+                    <i class="fa-solid fa-chart-pie w-5 text-center"></i>
+                    <span>Dashboard</span>
+                </a>
+
+                <!-- 2. Group Lessons (Dropdown parent) -->
+                <div>
+                    <button onclick="toggleSubmenu('groupLessonsMenu', 'groupLessonsChevron')" class="w-full flex items-center justify-between px-4 py-2.5 text-slate-400 hover:bg-slate-800 hover:text-slate-200 rounded-lg font-medium transition text-sm">
+                        <div class="flex items-center space-x-3">
+                            <i class="fa-solid fa-people-group w-5 text-center"></i>
+                            <span>Group Lessons</span>
+                        </div>
+                        <i id="groupLessonsChevron" class="fa-solid fa-chevron-down text-xs transition-transform duration-200"></i>
+                    </button>
+                    <div id="groupLessonsMenu" class="pl-11 pr-2 py-1 space-y-1 hidden">
+                        <a href="group-students-data.html" class="block py-1.5 px-3 text-xs text-slate-400 hover:text-indigo-400 hover:bg-slate-900 rounded-md transition">Students Data</a>
+                        <a href="group-gradebook.html" class="block py-1.5 px-3 text-xs text-slate-400 hover:text-indigo-400 hover:bg-slate-900 rounded-md transition">Gradebook</a>
+                        <a href="group-assessment.html" class="block py-1.5 px-3 text-xs text-slate-400 hover:text-indigo-400 hover:bg-slate-900 rounded-md transition">Assessment</a>
+                    </div>
+                </div>
+
+                <!-- 3. One-on-One (Dropdown parent) -->
+                <div>
+                    <button onclick="toggleSubmenu('oneOnOneMenu', 'oneOnOneChevron')" class="w-full flex items-center justify-between px-4 py-2.5 text-slate-400 hover:bg-slate-800 hover:text-slate-200 rounded-lg font-medium transition text-sm">
+                        <div class="flex items-center space-x-3">
+                            <i class="fa-solid fa-user-graduate w-5 text-center"></i>
+                            <span>One-on-One</span>
+                        </div>
+                        <i id="oneOnOneChevron" class="fa-solid fa-chevron-down text-xs transition-transform duration-200"></i>
+                    </button>
+                    <div id="oneOnOneMenu" class="pl-11 pr-2 py-1 space-y-1 hidden">
+                        <a href="one-on-one-student-profile.html" class="block py-1.5 px-3 text-xs text-slate-400 hover:text-indigo-400 hover:bg-slate-900 rounded-md transition">Student Profile</a>
+                        <a href="one-on-one-gradebook.html" class="block py-1.5 px-3 text-xs text-slate-400 hover:text-indigo-400 hover:bg-slate-900 rounded-md transition">Gradebook</a>
+                        <a href="one-on-one-assessment.html" class="block py-1.5 px-3 text-xs text-slate-400 hover:text-indigo-400 hover:bg-slate-900 rounded-md transition">Assessment</a>
+                    </div>
+                </div>
+
+                <!-- 4. Lesson Library (Dropdown parent) -->
+                <div>
+                    <button onclick="toggleSubmenu('lessonLibraryMenu', 'lessonLibraryChevron')" class="w-full flex items-center justify-between px-4 py-2.5 text-slate-400 hover:bg-slate-800 hover:text-slate-200 rounded-lg font-medium transition text-sm">
+                        <div class="flex items-center space-x-3">
+                            <i class="fa-solid fa-book-open w-5 text-center"></i>
+                            <span>Lesson Library</span>
+                        </div>
+                        <i id="lessonLibraryChevron" class="fa-solid fa-chevron-down text-xs transition-transform duration-200"></i>
+                    </button>
+                    <div id="lessonLibraryMenu" class="pl-11 pr-2 py-1 space-y-1 hidden">
+                        <a href="add-subject.html" class="block py-1.5 px-3 text-xs text-slate-400 hover:text-indigo-400 hover:bg-slate-900 rounded-md transition">Add Subject</a>
+                    </div>
+                </div>
+
+                <!-- 5. Quiz Maker -->
+                <a href="quiz-maker.html" class="flex items-center space-x-3 px-4 py-2.5 text-slate-400 hover:bg-slate-800 hover:text-slate-200 rounded-lg font-medium transition text-sm">
+                    <i class="fa-solid fa-list-check w-5 text-center"></i>
+                    <span>Quiz Maker</span>
+                </a>
+
+                <!-- [Line Separator] -->
+                <div class="my-2 border-t border-slate-800/80"></div>
+
+                <!-- 6. Enrollment Forms -->
+                <a href="enrollment-forms.html" class="flex items-center space-x-3 px-4 py-2.5 text-slate-400 hover:bg-slate-800 hover:text-slate-200 rounded-lg font-medium transition text-sm">
+                    <i class="fa-solid fa-wpforms w-5 text-center"></i>
+                    <span>Enrollment Forms</span>
+                </a>
+
+                <!-- 7. Landing Pages -->
+                <a href="landing-pages.html" class="flex items-center space-x-3 px-4 py-2.5 text-slate-400 hover:bg-slate-800 hover:text-slate-200 rounded-lg font-medium transition text-sm">
+                    <i class="fa-solid fa-globe w-5 text-center"></i>
+                    <span>Landing Pages</span>
+                </a>
+
+                <!-- 8. Pre-Recorded Lessons (ACTIVE MENU) -->
+                <a href="prerecorded-lessons.html" class="flex items-center space-x-3 px-4 py-2.5 text-indigo-400 bg-indigo-600/20 rounded-lg font-medium transition text-sm">
+                    <i class="fa-solid fa-circle-play w-5 text-center text-indigo-400"></i>
+                    <span>Pre-Recorded Lessons</span>
+                </a>
+
+                <!-- [Line Separator] -->
+                <div class="my-2 border-t border-slate-800/80"></div>
+
+                <!-- 9. Help -->
+                <a href="help.html" class="flex items-center space-x-3 px-4 py-2.5 text-slate-400 hover:bg-slate-800 hover:text-slate-200 rounded-lg font-medium transition text-sm">
+                    <i class="fa-solid fa-circle-question w-5 text-center"></i>
+                    <span>Help</span>
+                </a>
+            </nav>
+        </div>
+
+        <!-- Sidebar Footer User Profile -->
+        <div class="p-4 border-t border-slate-800">
+            <div class="bg-slate-900 p-3 rounded-lg border border-slate-800 mb-4">
+                <div class="flex justify-between items-center text-xs mb-1">
+                    <span class="text-slate-400">Current Plan</span>
+                    <span class="bg-emerald-500/20 text-emerald-400 px-2 py-0.5 rounded text-[10px] font-bold uppercase">Pro SaaS</span>
+                </div>
+                <p class="text-sm font-semibold">Teacher Plan</p>
+            </div>
+            <div class="flex items-center space-x-3">
+                <div class="w-10 h-10 rounded-full bg-indigo-600 text-white font-bold flex items-center justify-center text-sm border border-indigo-400/30">
+                    TJ
+                </div>
+                <div class="overflow-hidden">
+                    <p class="text-sm font-medium text-white truncate">Tutor Jay</p>
+                    <p class="text-xs text-slate-400 truncate">jay@musictutorph.com</p>
+                </div>
+            </div>
+        </div>
+    </aside>
+
+    <!-- MAIN CONTENT CONTAINER -->
+    <div class="flex-1 flex flex-col h-screen overflow-y-auto bg-slate-900">
+        
+        <!-- TOPBAR WITH QUICK ACTION BUTTONS -->
+        <header class="h-16 bg-slate-950 border-b border-slate-800 flex items-center justify-between px-6 sticky top-0 z-10 shrink-0">
+            <div class="flex items-center space-x-4">
+                <h2 class="text-xl font-bold text-white">Pre-Recorded Lessons</h2>
+            </div>
+            
+            <div class="flex items-center space-x-3">
+                <button onclick="openModal('addGroupLessonModal')" class="bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-semibold px-4 py-2 rounded-lg transition flex items-center space-x-2 shadow-lg shadow-emerald-900/30">
+                    <i class="fa-solid fa-plus"></i>
+                    <span>Add New <strong class="font-bold">Group Lesson</strong></span>
+                </button>
+                <button onclick="openModal('addStudentModal')" class="bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-semibold px-4 py-2 rounded-lg transition flex items-center space-x-2 shadow-lg shadow-indigo-900/30">
+                    <i class="fa-solid fa-plus"></i>
+                    <span>Add New Student</span>
+                </button>
+            </div>
+        </header>
+
+        <!-- MAIN WORKSPACE: 3 PANES LAYOUT -->
+        <main class="p-6 flex-1 flex gap-6 overflow-hidden">
+            
+            <!-- 1. LEFT PANE: PRE-RECORDED LESSONS LIST -->
+            <div class="w-64 bg-slate-950 border border-slate-800 rounded-xl p-4 shrink-0 flex flex-col justify-between shadow-xl">
+                <div>
+                    <div class="flex items-center space-x-2 px-2 pb-4 border-b border-slate-800 mb-4">
+                        <i class="fa-solid fa-film text-indigo-400"></i>
+                        <h3 class="font-bold text-white text-base">Video Lessons</h3>
+                    </div>
+
+                    <div class="space-y-1.5 overflow-y-auto max-h-[calc(100vh-250px)]" id="prerecordedList">
+                        <button onclick="selectLesson('Tritone Substitution Masterclass', '₱24,500', '35 Purchases', this)" class="lesson-btn w-full flex items-center space-x-3 p-3 rounded-lg bg-indigo-600/20 text-indigo-400 border border-indigo-500/30 text-left transition font-medium text-xs">
+                            <div class="w-7 h-7 rounded bg-indigo-500/20 flex items-center justify-center shrink-0">
+                                <i class="fa-solid fa-circle-play text-xs"></i>
+                            </div>
+                            <span class="truncate">Tritone Substitution Masterclass</span>
+                        </button>
+
+                        <button onclick="selectLesson('12-Bar Blues Bassline Secrets', '₱14,400', '18 Purchases', this)" class="lesson-btn w-full flex items-center space-x-3 p-3 text-slate-400 hover:bg-slate-900 hover:text-slate-200 text-left transition font-medium text-xs rounded-lg">
+                            <div class="w-7 h-7 rounded bg-slate-800 flex items-center justify-center shrink-0">
+                                <i class="fa-solid fa-circle-play text-xs"></i>
+                            </div>
+                            <span class="truncate">12-Bar Blues Bassline Secrets</span>
+                        </button>
+
+                        <button onclick="selectLesson('Neo-Soul Chord Voicings Pack', '₱19,200', '24 Purchases', this)" class="lesson-btn w-full flex items-center space-x-3 p-3 text-slate-400 hover:bg-slate-900 hover:text-slate-200 text-left transition font-medium text-xs rounded-lg">
+                            <div class="w-7 h-7 rounded bg-slate-800 flex items-center justify-center shrink-0">
+                                <i class="fa-solid fa-circle-play text-xs"></i>
+                            </div>
+                            <span class="truncate">Neo-Soul Chord Voicings Pack</span>
+                        </button>
+
+                        <button onclick="selectLesson('Left Hand Independence Drills', '₱9,800', '14 Purchases', this)" class="lesson-btn w-full flex items-center space-x-3 p-3 text-slate-400 hover:bg-slate-900 hover:text-slate-200 text-left transition font-medium text-xs rounded-lg">
+                            <div class="w-7 h-7 rounded bg-slate-800 flex items-center justify-center shrink-0">
+                                <i class="fa-solid fa-circle-play text-xs"></i>
+                            </div>
+                            <span class="truncate">Left Hand Independence Drills</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="p-3 bg-slate-900 border border-slate-800 rounded-lg text-xs text-slate-400">
+                    <p class="font-semibold text-slate-300 mb-1"><i class="fa-solid fa-lightbulb text-amber-400 mr-1"></i> Quick Tip:</p>
+                    <p>Right-click any cell in the table to quickly update purchaser info!</p>
+                </div>
+            </div>
+
+            <!-- 2. MIDDLE PANE: PURCHASERS DATA TABLE AREA -->
+            <div class="flex-1 bg-slate-950 border border-slate-800 rounded-xl overflow-hidden flex flex-col shadow-xl">
+                
+                <!-- Table Header Bar -->
+                <div class="p-5 border-b border-slate-800 flex flex-wrap justify-between items-center gap-4 bg-slate-950">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-9 h-9 rounded-lg bg-indigo-600/20 border border-indigo-500/30 text-indigo-400 flex items-center justify-center">
+                            <i class="fa-solid fa-circle-play text-base"></i>
+                        </div>
+                        <div>
+                            <h3 id="activeLessonTitle" class="font-bold text-white text-lg">Tritone Substitution Masterclass</h3>
+                            <p class="text-xs text-slate-400">Total Earnings: <span id="activeLessonEarnings" class="text-emerald-400 font-bold">₱24,500</span> • <span id="activeLessonPurchases" class="text-indigo-300 font-semibold">35 Purchases</span></p>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center space-x-3">
+                        <input type="text" placeholder="Search student..." class="bg-slate-900 border border-slate-800 text-sm px-3 py-1.5 rounded-lg focus:outline-none focus:border-indigo-500 text-slate-200">
+                        
+                        <!-- Action Dropdown Button -->
+                        <div class="relative">
+                            <button onclick="toggleActionDropdown('actionMenuGroup')" class="bg-slate-800 hover:bg-slate-700 text-white text-sm px-4 py-1.5 rounded-lg font-medium transition flex items-center space-x-2 border border-slate-700">
+                                <span>Action</span>
+                                <i class="fa-solid fa-chevron-down text-xs"></i>
+                            </button>
+                            <div id="actionMenuGroup" class="absolute right-0 mt-2 w-56 bg-slate-900 border border-slate-800 rounded-lg shadow-2xl py-1 hidden z-30">
+                                <a href="#" onclick="alert('Exporting purchasers list to XLSX file...'); toggleActionDropdown('actionMenuGroup');" class="flex items-center space-x-2 px-4 py-2 text-xs text-slate-300 hover:bg-slate-800 hover:text-emerald-400 transition">
+                                    <i class="fa-solid fa-file-excel text-emerald-500"></i>
+                                    <span>Download List to XLSX File</span>
+                                </a>
+                                <hr class="border-slate-800">
+                                <a href="#" onclick="alert('Lesson deletion confirmed.'); toggleActionDropdown('actionMenuGroup');" class="flex items-center space-x-2 px-4 py-2 text-xs text-rose-400 hover:bg-rose-500/10 transition">
+                                    <i class="fa-solid fa-trash"></i>
+                                    <span>Delete Video Lesson</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Editable Purchasers Table -->
+                <div class="flex-1 overflow-auto">
+                    <table class="w-full text-left border-collapse text-xs">
+                        <thead>
+                            <tr class="bg-slate-900/80 text-slate-400 border-b border-slate-800 uppercase tracking-wider text-[11px] sticky top-0 z-10">
+                                <th class="p-3.5 font-semibold text-center w-10">#</th>
+                                <th class="p-3.5 font-semibold">Name</th>
+                                <th class="p-3.5 font-semibold">FB Name</th>
+                                <th class="p-3.5 font-semibold">Email</th>
+                                <th class="p-3.5 font-semibold">Payment Gateway</th>
+                                <th class="p-3.5 font-semibold">Contact Method</th>
+                                <th class="p-3.5 font-semibold">Amount</th>
+                                <th class="p-3.5 font-semibold text-rose-400 text-center">Remove</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-slate-800">
+                            
+                            <!-- DATE STAMP BANNER 1 -->
+                            <tr class="bg-indigo-950/60 border-y border-indigo-900/60">
+                                <td colspan="8" class="px-4 py-2.5 font-bold text-indigo-300 text-xs whitespace-nowrap">
+                                    <div class="flex items-center space-x-2">
+                                        <i class="fa-regular fa-calendar-days text-indigo-400"></i>
+                                        <span>March 12, 2026 (Purchased Batch - 2 Buyers)</span>
+                                    </div>
+                                </td>
+                            </tr>
+
+                            <!-- March 12 Student #1 -->
+                            <tr class="hover:bg-slate-900/50 transition">
+                                <td class="p-3.5 font-bold text-slate-400 text-center">1</td>
+                                <td class="p-3.5 font-medium text-white flex items-center space-x-2.5" oncontextmenu="makeEditable(event)">
+                                    <div class="w-6 h-6 rounded-full bg-indigo-500/20 text-indigo-400 font-bold text-[10px] flex items-center justify-center">CR</div>
+                                    <span>Carlos Ramos</span>
+                                </td>
+                                <td class="p-3.5 text-blue-400 font-medium" oncontextmenu="makeEditable(event)"><i class="fa-brands fa-facebook-messenger mr-1"></i>Carlos Ramos Musician</td>
+                                <td class="p-3.5 text-slate-300" oncontextmenu="makeEditable(event)">carlos.ramos@gmail.com</td>
+                                <td class="p-3.5 text-emerald-400 font-medium" oncontextmenu="makeEditable(event)">GCash</td>
+                                <td class="p-3.5 text-slate-300" oncontextmenu="makeEditable(event)"><span class="bg-blue-500/10 text-blue-400 border border-blue-500/20 px-2 py-0.5 rounded">Messenger</span></td>
+                                <td class="p-3.5 font-bold text-white" oncontextmenu="makeEditable(event)">₱700</td>
+                                <td class="p-3.5 text-center">
+                                    <button onclick="removeStudentRow(this)" class="text-rose-500 hover:text-rose-400 font-bold p-1 hover:bg-rose-500/10 rounded transition">
+                                        <i class="fa-solid fa-xmark text-sm"></i>
+                                    </button>
+                                </td>
+                            </tr>
+
+                            <!-- March 12 Student #2 -->
+                            <tr class="hover:bg-slate-900/50 transition">
+                                <td class="p-3.5 font-bold text-slate-400 text-center">2</td>
+                                <td class="p-3.5 font-medium text-white flex items-center space-x-2.5" oncontextmenu="makeEditable(event)">
+                                    <div class="w-6 h-6 rounded-full bg-indigo-500/20 text-indigo-400 font-bold text-[10px] flex items-center justify-center">EV</div>
+                                    <span>Elena Villanueva</span>
+                                </td>
+                                <td class="p-3.5 text-blue-400 font-medium" oncontextmenu="makeEditable(event)"><i class="fa-brands fa-facebook-messenger mr-1"></i>Elena V. Keys</td>
+                                <td class="p-3.5 text-slate-300" oncontextmenu="makeEditable(event)">elena.v@yahoo.com</td>
+                                <td class="p-3.5 text-cyan-400 font-medium" oncontextmenu="makeEditable(event)">Maya</td>
+                                <td class="p-3.5 text-slate-300" oncontextmenu="makeEditable(event)"><span class="bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 px-2 py-0.5 rounded">Email</span></td>
+                                <td class="p-3.5 font-bold text-white" oncontextmenu="makeEditable(event)">₱700</td>
+                                <td class="p-3.5 text-center">
+                                    <button onclick="removeStudentRow(this)" class="text-rose-500 hover:text-rose-400 font-bold p-1 hover:bg-rose-500/10 rounded transition">
+                                        <i class="fa-solid fa-xmark text-sm"></i>
+                                    </button>
+                                </td>
+                            </tr>
+
+                            <!-- DATE STAMP BANNER 2 -->
+                            <tr class="bg-indigo-950/60 border-y border-indigo-900/60">
+                                <td colspan="8" class="px-4 py-2.5 font-bold text-indigo-300 text-xs whitespace-nowrap">
+                                    <div class="flex items-center space-x-2">
+                                        <i class="fa-regular fa-calendar-days text-indigo-400"></i>
+                                        <span>March 14, 2026 (Purchased Batch - Resets Day Index to #1)</span>
+                                    </div>
+                                </td>
+                            </tr>
+
+                            <!-- March 14 Student #1 -->
+                            <tr class="hover:bg-slate-900/50 transition">
+                                <td class="p-3.5 font-bold text-slate-400 text-center">1</td>
+                                <td class="p-3.5 font-medium text-white flex items-center space-x-2.5" oncontextmenu="makeEditable(event)">
+                                    <div class="w-6 h-6 rounded-full bg-indigo-500/20 text-indigo-400 font-bold text-[10px] flex items-center justify-center">RM</div>
+                                    <span>Ricardo Mercado</span>
+                                </td>
+                                <td class="p-3.5 text-blue-400 font-medium" oncontextmenu="makeEditable(event)"><i class="fa-brands fa-facebook-messenger mr-1"></i>Ricardo Mercado</td>
+                                <td class="p-3.5 text-slate-300" oncontextmenu="makeEditable(event)">ricardo.m@gmail.com</td>
+                                <td class="p-3.5 text-emerald-400 font-medium" oncontextmenu="makeEditable(event)">GCash</td>
+                                <td class="p-3.5 text-slate-300" oncontextmenu="makeEditable(event)"><span class="bg-blue-500/10 text-blue-400 border border-blue-500/20 px-2 py-0.5 rounded">FB Page</span></td>
+                                <td class="p-3.5 font-bold text-white" oncontextmenu="makeEditable(event)">₱700</td>
+                                <td class="p-3.5 text-center">
+                                    <button onclick="removeStudentRow(this)" class="text-rose-500 hover:text-rose-400 font-bold p-1 hover:bg-rose-500/10 rounded transition">
+                                        <i class="fa-solid fa-xmark text-sm"></i>
+                                    </button>
+                                </td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Footer Add Purchaser Button -->
+                <div class="p-3 border-t border-slate-800 bg-slate-950 flex justify-center">
+                    <button onclick="openModal('addPurchaserModal')" class="bg-indigo-600 hover:bg-indigo-500 text-white text-xs px-5 py-2 rounded-lg font-semibold transition flex items-center space-x-2 shadow-lg shadow-indigo-900/30">
+                        <i class="fa-solid fa-plus"></i>
+                        <span>+ Add New Purchaser of this Lesson</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- 3. RIGHT PANE: TOP PERFORMING LESSON (RANKED BY SALES) -->
+            <div class="w-72 bg-slate-950 border border-slate-800 rounded-xl p-5 shrink-0 flex flex-col justify-between shadow-xl">
+                <div>
+                    <div class="flex items-center space-x-2 pb-4 border-b border-slate-800 mb-4">
+                        <i class="fa-solid fa-trophy text-amber-400"></i>
+                        <h3 class="font-bold text-white text-base">Top Performing Lesson</h3>
+                    </div>
+
+                    <div class="space-y-3.5">
+                        
+                        <!-- Rank 1 -->
+                        <div class="bg-slate-900/90 border border-amber-500/30 p-3 rounded-xl flex items-center justify-between shadow-sm">
+                            <div class="flex items-center space-x-3 overflow-hidden">
+                                <div class="w-7 h-7 rounded-lg bg-amber-500/20 border border-amber-400/40 text-amber-400 font-extrabold text-xs flex items-center justify-center shrink-0">
+                                    #1
+                                </div>
+                                <div class="overflow-hidden">
+                                    <h4 class="text-xs font-bold text-white truncate">Tritone Substitution</h4>
+                                    <p class="text-[10px] text-slate-400">35 Buyers</p>
+                                </div>
+                            </div>
+                            <span class="text-xs font-extrabold text-emerald-400 shrink-0">₱24,500</span>
+                        </div>
+
+                        <!-- Rank 2 -->
+                        <div class="bg-slate-900/80 border border-slate-800 p-3 rounded-xl flex items-center justify-between">
+                            <div class="flex items-center space-x-3 overflow-hidden">
+                                <div class="w-7 h-7 rounded-lg bg-slate-400/20 border border-slate-400/40 text-slate-300 font-extrabold text-xs flex items-center justify-center shrink-0">
+                                    #2
+                                </div>
+                                <div class="overflow-hidden">
+                                    <h4 class="text-xs font-bold text-white truncate">Neo-Soul Voicings</h4>
+                                    <p class="text-[10px] text-slate-400">24 Buyers</p>
+                                </div>
+                            </div>
+                            <span class="text-xs font-extrabold text-emerald-400 shrink-0">₱19,200</span>
+                        </div>
+
+                        <!-- Rank 3 -->
+                        <div class="bg-slate-900/80 border border-slate-800 p-3 rounded-xl flex items-center justify-between">
+                            <div class="flex items-center space-x-3 overflow-hidden">
+                                <div class="w-7 h-7 rounded-lg bg-amber-700/20 border border-amber-700/40 text-amber-600 font-extrabold text-xs flex items-center justify-center shrink-0">
+                                    #3
+                                </div>
+                                <div class="overflow-hidden">
+                                    <h4 class="text-xs font-bold text-white truncate">12-Bar Blues Secrets</h4>
+                                    <p class="text-[10px] text-slate-400">18 Buyers</p>
+                                </div>
+                            </div>
+                            <span class="text-xs font-extrabold text-emerald-400 shrink-0">₱14,400</span>
+                        </div>
+
+                        <!-- Rank 4 -->
+                        <div class="bg-slate-900/80 border border-slate-800 p-3 rounded-xl flex items-center justify-between">
+                            <div class="flex items-center space-x-3 overflow-hidden">
+                                <div class="w-7 h-7 rounded-lg bg-slate-800 text-slate-400 font-extrabold text-xs flex items-center justify-center shrink-0">
+                                    #4
+                                </div>
+                                <div class="overflow-hidden">
+                                    <h4 class="text-xs font-bold text-white truncate">Left Hand Independence</h4>
+                                    <p class="text-[10px] text-slate-400">14 Buyers</p>
+                                </div>
+                            </div>
+                            <span class="text-xs font-extrabold text-emerald-400 shrink-0">₱9,800</span>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- Total Pre-Recorded Revenue Summary -->
+                <div class="p-3.5 bg-slate-900 border border-slate-800 rounded-xl space-y-1">
+                    <p class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Total Course Revenue</p>
+                    <p class="text-xl font-extrabold text-emerald-400">₱67,900.00</p>
+                    <p class="text-[10px] text-slate-400">91 Total Video Purchases</p>
+                </div>
+
+            </div>
+
+        </main>
+    </div>
+
+    <!-- ==================== MODAL WINDOWS ==================== -->
+
+    <!-- 1. ADD NEW GROUP LESSON MODAL -->
+    <div id="addGroupLessonModal" class="fixed inset-0 bg-black/70 backdrop-blur-md hidden flex items-center justify-center p-4 z-50">
+        <div class="bg-slate-950 border border-slate-800 rounded-xl w-full max-w-md overflow-hidden shadow-2xl">
+            <div class="p-5 border-b border-slate-800 flex justify-between items-center bg-slate-900/50">
+                <h3 class="text-base font-bold text-white flex items-center space-x-2">
+                    <i class="fa-solid fa-layer-group text-emerald-400"></i>
+                    <span>Add New Group Lesson</span>
+                </h3>
+                <button onclick="closeModal('addGroupLessonModal')" class="text-slate-400 hover:text-white p-1">
+                    <i class="fa-solid fa-xmark text-lg"></i>
+                </button>
+            </div>
+            
+            <form onsubmit="event.preventDefault(); closeModal('addGroupLessonModal');" class="p-6 space-y-4">
+                <div>
+                    <label class="block text-xs font-medium text-slate-300 mb-1">Lesson Title:</label>
+                    <input type="text" placeholder="e.g. Left Hand Trainer Workshop" class="w-full bg-slate-900 border border-slate-800 rounded-lg p-2.5 text-xs text-white focus:outline-none focus:border-emerald-500">
+                </div>
+                <div>
+                    <label class="block text-xs font-medium text-slate-300 mb-1">Instrument:</label>
+                    <select class="w-full bg-slate-900 border border-slate-800 rounded-lg p-2.5 text-xs text-slate-200 focus:outline-none focus:border-emerald-500">
+                        <option>Piano</option>
+                        <option>Keyboard</option>
+                        <option>Ear Training / Theory</option>
+                    </select>
+                </div>
+                <div class="pt-4 border-t border-slate-800 flex justify-end space-x-3">
+                    <button type="button" onclick="closeModal('addGroupLessonModal')" class="px-4 py-2 text-xs text-slate-400 hover:text-white font-medium">Cancel</button>
+                    <button type="submit" class="bg-emerald-600 hover:bg-emerald-500 text-white text-xs px-5 py-2 rounded-lg font-semibold transition shadow-md shadow-emerald-900/20">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- 2. ADD NEW STUDENT MODAL (TOPBAR) -->
+    <div id="addStudentModal" class="fixed inset-0 bg-black/70 backdrop-blur-md hidden flex items-center justify-center p-4 z-50">
+        <div class="bg-slate-950 border border-slate-800 rounded-xl w-full max-w-lg overflow-hidden shadow-2xl">
+            <div class="p-5 border-b border-slate-800 flex justify-between items-center bg-slate-900/50">
+                <h3 class="text-base font-bold text-white flex items-center space-x-2">
+                    <i class="fa-solid fa-user-plus text-indigo-400"></i>
+                    <span>Add New Student</span>
+                </h3>
+                <button onclick="closeModal('addStudentModal')" class="text-slate-400 hover:text-white p-1">
+                    <i class="fa-solid fa-xmark text-lg"></i>
+                </button>
+            </div>
+            
+            <form onsubmit="event.preventDefault(); closeModal('addStudentModal');" class="p-6 space-y-5 max-h-[80vh] overflow-y-auto">
+                <div class="space-y-3">
+                    <h4 class="text-xs font-bold text-indigo-400 uppercase tracking-wider border-b border-slate-800 pb-1 flex items-center">
+                        <i class="fa-solid fa-address-card mr-2"></i> General Info
+                    </h4>
+                    <div>
+                        <label class="block text-xs font-medium text-slate-300 mb-1">Name:</label>
+                        <input type="text" placeholder="Full Student Name" class="w-full bg-slate-900 border border-slate-800 rounded-lg p-2.5 text-xs text-white focus:outline-none focus:border-indigo-500">
+                    </div>
+                </div>
+
+                <div class="pt-4 border-t border-slate-800 flex justify-end space-x-3">
+                    <button type="button" onclick="closeModal('addStudentModal')" class="px-4 py-2 text-xs text-slate-400 hover:text-white font-medium">Cancel</button>
+                    <button type="submit" class="bg-indigo-600 hover:bg-indigo-500 text-white text-xs px-5 py-2 rounded-lg font-semibold transition shadow-md shadow-indigo-900/20">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- 3. ADD NEW PURCHASER MODAL (PURCHASERS TABLE FOOTER) -->
+    <div id="addPurchaserModal" class="fixed inset-0 bg-black/70 backdrop-blur-md hidden flex items-center justify-center p-4 z-50">
+        <div class="bg-slate-950 border border-slate-800 rounded-xl w-full max-w-md overflow-hidden shadow-2xl">
+            <div class="p-5 border-b border-slate-800 flex justify-between items-center bg-slate-900/50">
+                <h3 class="text-base font-bold text-white flex items-center space-x-2">
+                    <i class="fa-solid fa-cart-plus text-indigo-400"></i>
+                    <span>Add New Purchaser of this Lesson</span>
+                </h3>
+                <button onclick="closeModal('addPurchaserModal')" class="text-slate-400 hover:text-white p-1">
+                    <i class="fa-solid fa-xmark text-lg"></i>
+                </button>
+            </div>
+            
+            <form onsubmit="event.preventDefault(); closeModal('addPurchaserModal');" class="p-6 space-y-3.5 max-h-[80vh] overflow-y-auto">
+                
+                <div>
+                    <label class="block text-xs font-medium text-slate-300 mb-1">Student / Purchaser Name:</label>
+                    <input type="text" placeholder="e.g. Juan Dela Cruz" class="w-full bg-slate-900 border border-slate-800 rounded-lg p-2.5 text-xs text-white focus:outline-none focus:border-indigo-500">
+                </div>
+
+                <div>
+                    <label class="block text-xs font-medium text-slate-300 mb-1">FB Name:</label>
+                    <input type="text" placeholder="e.g. Juan Dela Cruz Official" class="w-full bg-slate-900 border border-slate-800 rounded-lg p-2.5 text-xs text-white focus:outline-none focus:border-indigo-500">
+                </div>
+
+                <div>
+                    <label class="block text-xs font-medium text-slate-300 mb-1">Email:</label>
+                    <input type="email" placeholder="e.g. juan@gmail.com" class="w-full bg-slate-900 border border-slate-800 rounded-lg p-2.5 text-xs text-white focus:outline-none focus:border-indigo-500">
+                </div>
+
+                <div>
+                    <label class="block text-xs font-medium text-slate-300 mb-1">Payment Gateway:</label>
+                    <select class="w-full bg-slate-900 border border-slate-800 rounded-lg p-2.5 text-xs text-slate-200 focus:outline-none focus:border-indigo-500">
+                        <option>GCash</option>
+                        <option>Maya</option>
+                        <option>Bank Transfer</option>
+                        <option>PayPal</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-medium text-slate-300 mb-1">Contact Method:</label>
+                    <select class="w-full bg-slate-900 border border-slate-800 rounded-lg p-2.5 text-xs text-slate-200 focus:outline-none focus:border-indigo-500">
+                        <option>FB Messenger</option>
+                        <option>FB Page</option>
+                        <option>Email</option>
+                        <option>WhatsApp / SMS</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-medium text-slate-300 mb-1">Amount Paid (₱):</label>
+                    <input type="text" placeholder="e.g. ₱700" class="w-full bg-slate-900 border border-slate-800 rounded-lg p-2.5 text-xs text-white focus:outline-none focus:border-indigo-500">
+                </div>
+
+                <div class="pt-4 border-t border-slate-800 flex justify-end space-x-3">
+                    <button type="button" onclick="closeModal('addPurchaserModal')" class="px-4 py-2 text-xs text-slate-400 hover:text-white font-medium">Cancel</button>
+                    <button type="submit" class="bg-indigo-600 hover:bg-indigo-500 text-white text-xs px-5 py-2 rounded-lg font-semibold transition shadow-md shadow-indigo-900/20">Save Purchaser</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- JAVASCRIPT LOGIC -->
+    <script>
+        // Modal Handlers
+        function openModal(modalId) { document.getElementById(modalId).classList.remove('hidden'); }
+        function closeModal(modalId) { document.getElementById(modalId).classList.add('hidden'); }
+
+        // Submenu Toggle
+        function toggleSubmenu(menuId, chevronId) {
+            const menu = document.getElementById(menuId);
+            const chevron = document.getElementById(chevronId);
+            if (menu) menu.classList.toggle('hidden');
+            if (chevron) chevron.classList.toggle('rotate-180');
+        }
+
+        // Action Dropdown Toggle
+        function toggleActionDropdown(menuId) {
+            const menu = document.getElementById(menuId);
+            if (menu) menu.classList.toggle('hidden');
+        }
+
+        // Dynamic Lesson Selector Handler
+        function selectLesson(title, earnings, purchases, btnElement) {
+            document.getElementById('activeLessonTitle').innerText = title;
+            document.getElementById('activeLessonEarnings').innerText = earnings;
+            document.getElementById('activeLessonPurchases').innerText = purchases;
+
+            document.querySelectorAll('.lesson-btn').forEach(btn => {
+                btn.className = "lesson-btn w-full flex items-center space-x-3 p-3 text-slate-400 hover:bg-slate-900 hover:text-slate-200 text-left transition font-medium text-xs rounded-lg";
+            });
+
+            btnElement.className = "lesson-btn w-full flex items-center space-x-3 p-3 rounded-lg bg-indigo-600/20 text-indigo-400 border border-indigo-500/30 text-left transition font-medium text-xs";
+        }
+
+        // Remove Row Function
+        function removeStudentRow(buttonElement) {
+            if (confirm("Are you sure you want to remove this purchaser?")) {
+                const row = buttonElement.closest('tr');
+                row.remove();
+            }
+        }
+
+        // Inline Cell Editing via Right Click
+        function makeEditable(event) {
+            event.preventDefault();
+            const cell = event.currentTarget;
+            if (cell.querySelector('input')) return;
+
+            const currentText = cell.innerText.trim();
+            const input = document.createElement('input');
+            input.type = 'text';
+            input.value = currentText;
+            input.className = 'w-full bg-slate-900 border border-indigo-500 text-white text-xs p-1 rounded focus:outline-none';
+
+            cell.innerHTML = '';
+            cell.appendChild(input);
+            input.focus();
+
+            input.addEventListener('blur', () => cell.innerText = input.value || '-');
+            input.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter') cell.innerText = input.value || '-';
+            });
+        }
+    </script>
+</body>
+</html>
